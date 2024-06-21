@@ -9,8 +9,13 @@ const ejs = require("ejs");
 const path = require("path");
 const session = require("express-session");
 const passport = require("passport");
+const cors = require("cors");
+const compression = require("compression");
 require("./utils/configPassport");
 
+// cors
+app.use(cors());
+app.use(compression());
 // body parser
 app.use(express.json());
 app.use(cookieParser());
@@ -29,7 +34,7 @@ app.use(
   session({
     secret: process.env.SECRET_KEY_SESSION,
     resave: false,
-    saveUninitialized: true,
+    saveUninitialized: false,
   })
 );
 //google OAuth
