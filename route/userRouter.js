@@ -2,6 +2,7 @@ const express = require("express");
 const passport = require("passport");
 
 const router = express.Router();
+const viewController = require("../controller/viewController");
 const {
   signup,
   activateUser,
@@ -19,6 +20,7 @@ const {
 } = require("../controller/autheController");
 const { getUser, getUsers } = require("../controller/userController");
 const { set } = require("mongoose");
+const { render } = require("ejs");
 // authentication routes
 router.post("/signup", signup);
 router.post("/activate-account", activateUser);
@@ -39,15 +41,13 @@ router.get(
   "/auth/google",
   passport.authenticate("google", { scope: ["profile", "email"] })
 );
+
 router.get(
   "/auth/google/callback",
   passport.authenticate("google", { failureRedirect: "/" }),
   googleCallback
 );
 
-// router.get("/update-password", ensureAuthenticated, (req, res) =>
-//   res.render("updatePassword")
-// );
 router.post("/set-password", ensureAuthenticated, setPassword);
 
 module.exports = router;

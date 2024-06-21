@@ -30,7 +30,7 @@ exports.sendToken = (user, statusCode, res) => {
 
   res.status(statusCode).json({
     status: "success",
-    user,
+    message: "User logged in successfully",
     accessToken,
   });
 };

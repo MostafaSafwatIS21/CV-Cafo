@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html style="font-size: 16px;" lang="en">
+
+<head>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="utf-8">
+  <meta name="keywords" content="">
+  <meta name="description" content="">
+  <title>OTP</title>
+  <link rel="stylesheet" href="Includes/Libraries/Bootstrap/bootstrap.css" media="screen">
+  <link rel="stylesheet" href="Layout/Arabic/css/OTP.css" media="screen">
+  <link rel="stylesheet" href="Layout/Arabic/css/alert.css" media="screen">
+  <script class="u-script" type="text/javascript" src="Includes/Libraries/JQuery/jquery.js" defer=""></script>
+  <script class="u-script" type="text/javascript" src="Includes/Libraries/Bootstrap/bootstrap.js" defer=""></script>
+  <link id="u-theme-google-font" rel="stylesheet"
+    href="https://fonts.googleapis.com/css?family=Cairo:200,300,400,500,600,700,800,900|Tajawal:200,300,400,500,700,800,900">
+  <meta data-intl-tel-input-cdn-path="Includes/Libraries/intlTelInput/">
+</head>
+
+<body data-path-to-root="./" data-include-products="false" class="u-body u-xxl-mode" data-lang="en">
+  <section class="u-clearfix u-section-1" id="sec-c7d8">
+    <div class="u-clearfix u-sheet u-sheet-1">
+      <div class="u-align-center u-form u-form-1">
+        <form action="api/user/activate-account" class="u-clearfix u-form-spacing-10  u-inner-form form-opt"
+          target="responseFrame" source="email" name="form" style="padding: 10px;" method="post">
+          <div class="u-form-group u-form-name">
+            <label for="name-7cdd" class="u-label u-label-1">OTP</label>
+            <input type="text" placeholder="ادخل الرمز المرسل علي البريد الالكتروني خاصتك" id="name-7cdd"
+              name="activateCode" class="u-input u-input-rectangle u-radius u-input-1" >
+            <input type="hidden" value="<%= token%>" name="activateToken" id="token">
+          </div>
+          <div id="errorMessage" class="u-form-send-error u-form-send-message" style="display:none;">Unable to
+            send your
+            message. Please fix errors then try again.</div>
+          <div class="u-align-center u-form-group">
+            <button class="u-btn u-btn-round  u-button-style u-radius u-btn-1">تأكيد </button>
+          </div>
+          <!-- <div class="u-form-send-message "> <%= message%> </div> -->
+
+
+
+        </form>
+      </div>
+    </div>
+  </section>
+  <iframe id="responseFrame" name="responseFrame" style="display:none;" data-url="login"></iframe>
+ 
+  <script src="Layout/Arabic/js/alert.js" defer=""></script>
+
+</body>
+
+</html>

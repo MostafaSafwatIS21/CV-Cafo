@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title><%= title%></title>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #f2f2f2;
+            font-family: Arial, sans-serif;
+            margin: 0;
+        }
+        .error-container {
+            text-align: center;
+            max-width: 600px;
+        }
+        .error-code {
+            font-size: 96px;
+            font-weight: bold;
+            color: #d9534f;
+        }
+        .error-message {
+            font-size: 24px;
+            margin: 20px 0;
+        }
+        .error-details {
+            font-size: 18px;
+            color: #666;
+        }
+        .error-photo {
+            margin-top: 20px;
+        }
+        img {
+            max-width: 100%;
+            height: auto;
+        }
+    </style>
+</head>
+<body>
+    <div class="error-container">
+        <div class="error-code" id="error-code"><%= statusCode%></div>
+        <div class="error-message">Something went wrong.</div>
+        <div class="error-details"><%= msg%>.</div>
+        <div class="error-photo">
+        </div>
+    </div>
+  
+</body>
+</html>

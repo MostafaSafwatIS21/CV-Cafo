@@ -21,13 +21,14 @@ passport.use(
             email: profile.emails[0].value,
             googleId: profile.id,
             isActive: true,
-            password: "12345678",
-            confirmPassword: "12345678",
+            password: process.env.DEFAULT_PASSWORD,
+            confirmPassword: process.env.DEFAULT_PASSWORD,
           });
         }
 
         done(null, user);
       } catch (err) {
+        console.log(err);
         done(err, null);
       }
     }

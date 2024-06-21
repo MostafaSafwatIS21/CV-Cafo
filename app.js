@@ -15,9 +15,9 @@ require("./utils/configPassport");
 app.use(express.json());
 app.use(cookieParser());
 // view engine
+app.use(express.static(path.join(__dirname, "public")));
 app.set("view engine", "ejs");
 app.set("views", path.join(__dirname, "/views"));
-app.use(express.static(path.join(__dirname, "public")));
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
@@ -46,7 +46,7 @@ app.get("/test", (req, res) => {
 });
 
 app.all("*", (req, res, next) => {
-  next(new AppError(`can't find ${req.originalUrl} `, 400));
+  next(new AppError(`can't find this route ${req.originalUrl} `, 400));
 });
 app.use(globalErrorHandler);
 module.exports = app;

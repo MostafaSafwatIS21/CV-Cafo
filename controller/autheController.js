@@ -13,14 +13,19 @@ const crypto = require("crypto");
  */
 
 exports.protect = catchAsync(async (req, res, next) => {
-  const accessToken = req.cookies.accessToken;
-  if (!accessToken) {
-    return next(new AppError("Please login to access resourses", 401));
+  const { accessToken, refreshToken } = req.cookies;
+  let token;
+  if (accessToken) {
+    token = accessToken;
+  } else if (refreshToken) {
+    token = refreshToken;
   }
-
+  if (!token) {
+    return next(new AppError("Please log in to access resources.", 401));
+  }
   let decodedToken;
   try {
-    decodedToken = jwt.verify(accessToken, process.env.ACCESS_TOKEN);
+    decodedToken = jwt.verify(token, process.env.ACCESS_TOKEN);
   } catch (err) {
     return next(new AppError("Invalid token. Please log in again.", 401));
   }
@@ -39,7 +44,22 @@ exports.protect = catchAsync(async (req, res, next) => {
   req.user = user;
   next();
 });
+exports.isLoggedIn = catchAsync(async (req, res, next) => {
+  if (req.cookies.refreshToken) {
+    const decodedToken = jwt.verify(
+      req.cookies.refreshToken,
+      process.env.REFRESH_TOKEN
+    );
 
+    const user = await User.findById(decodedToken.id);
+    if (!user) {
+      return next();
+    }
+    res.locals.user = user;
+    return next();
+  }
+  return next();
+});
 /**
  * @abstract check if user is admin
  */
@@ -74,11 +94,32 @@ const activationToken = (user) => {
 };
 
 exports.signup = catchAsync(async (req, res, next) => {
+  console.log(req.body);
   const { name, email } = req.body;
+  if (!name || !email) {
+    return next(new AppError("please provide all fields", 400));
+  }
   const checkEmail = await User.findOne({ email });
 
   if (checkEmail) {
-    return next(new AppError("This account has been signup before", 400));
+    return next(new AppError("This account has been register before", 400));
+    // res
+    //   .status(201)
+    //   .redirect(
+    //     `/Register?message=${encodeURIComponent(
+    //       `This account has been register before`
+    //     )}`
+    //   );
+  }
+  if (req.body.password !== req.body.confirmPassword) {
+    return next(new AppError("password and confirm password not match", 400));
+    // res
+    //   .status(201)
+    //   .redirect(
+    //     `/Register?message=${encodeURIComponent(
+    //       `password and confirm password not match`
+    //     )}`
+    //   );
   }
   const user = {
     name: req.body.name,
@@ -101,9 +142,9 @@ exports.signup = catchAsync(async (req, res, next) => {
     tamplate: "tempalteEmail.ejs",
     data,
   });
-  user.password = undefined;
+
   res.status(201).json({
-    status: "Successfully",
+    status: "success",
     message: `check your Email Box ${user.email} to activate your account. \n it will expire at 15 Minutes`,
     token: activateToken.token,
   });
@@ -116,8 +157,13 @@ exports.signup = catchAsync(async (req, res, next) => {
  */
 exports.activateUser = catchAsync(async (req, res, next) => {
   const { activateCode, activateToken } = req.body;
-  if (!activateCode || !activateToken) {
-    next(new AppError("Verification Code Not Found"));
+  if (!activateCode) {
+    next(new AppError("Please provide Activate code ", 400));
+  }
+  if (!activateToken) {
+    next(
+      new AppError("  Activate Token can't provide try register again  !", 400)
+    );
   }
   const token = jwt.verify(activateToken, process.env.SECRET_KEY_JWT);
   if (activateCode !== token.activationCode) {
@@ -125,14 +171,15 @@ exports.activateUser = catchAsync(async (req, res, next) => {
   }
 
   token.user.isActive = true;
-  const user = await User.create(token.user);
 
+  try {
+    const user = await User.create(token.user);
+  } catch (error) {
+    next(new AppError("something went wrong plese try again later", 500));
+  }
   res.status(201).json({
-    status: "sucess",
-    data: {
-      user,
-    },
-    message: "now you can login",
+    status: "success",
+    message: "User Created Successfully you can login now!",
   });
 });
 
@@ -143,16 +190,17 @@ exports.activateUser = catchAsync(async (req, res, next) => {
  */
 exports.login = catchAsync(async (req, res, next) => {
   const { email, password } = req.body;
+
   if (!email || !password) {
-    next(new AppError("please provide email and password", 400));
+    return next(new AppError("please provide email and password", 400));
   }
   const user = await User.findOne({ email }).select("+password");
   if (!user) {
-    next(new AppError("user not found", 400));
+    return next(new AppError("user not found", 400));
   }
   const checkPassword = await user.correctPassword(password, user.password);
   if (!checkPassword) {
-    next(new AppError("password or email not correct", 400));
+    return next(new AppError("password or email not correct", 400));
   }
   user.password = undefined;
 
@@ -266,7 +314,7 @@ exports.forgetPassword = catchAsync(async (req, res, next) => {
     console.log("reset token ", user.passwordResetToken);
     res.status(200).json({
       status: "success",
-      message: "Token sent to email!",
+      message: "Token sent to email check your box!",
     });
   } catch (error) {
     user.passwordResetToken = undefined;
@@ -346,9 +394,13 @@ const signToken = (id) => {
   });
 };
 exports.googleCallback = (req, res) => {
-  const token = signToken(req.user._id);
-  const decodedToken = jwt.verify(token, process.env.ACCESS_TOKEN);
-  res.redirect(`api/user//set-password/:token=${token}`);
+  try {
+    const token = signToken(req.user._id);
+
+    res.redirect(`/set-password`);
+  } catch (error) {
+    console.log(error);
+  }
 };
 
 /**
@@ -356,25 +408,35 @@ exports.googleCallback = (req, res) => {
  */
 
 exports.setPassword = catchAsync(async (req, res, next) => {
-  const { token } = req.params;
-  const decodedToken = jwt.verify(token, process.env.ACCESS_TOKEN);
+  const userid = req.user._id;
+  console.log("user", req.user, "body", req.body);
+
+  console.log("user id", userid);
   const { password, confirmPassword } = req.body;
   if (!password || !confirmPassword) {
-    return next(
-      new AppError("please provide password and confirmPassword", 400)
-    );
+    // return next(
+    //   new AppError("please provide password and confirmPassword", 400)
+    // );
+    res
+      .status(201)
+      .redirect(
+        `/set-password?message=${encodeURIComponent(
+          `please provide password and confirmPassword`
+        )}`
+      );
   }
-  const user = await User.findById(decodedToken.id);
+  const user = await User.findById(userid);
   if (!user) {
     return next(new AppError("user not found", 400));
   }
   user.password = password;
   user.confirmPassword = confirmPassword;
   await user.save();
-  res.status(201).json({
-    status: "success",
-    message: "password set successfully",
-  });
+  // res.status(201).json({
+  //   status: "success",
+  //   message: "password set successfully",
+  // });
+  res.redirect("/Login");
 });
 
 /**
@@ -385,7 +447,8 @@ exports.setPassword = catchAsync(async (req, res, next) => {
 
 module.exports.ensureAuthenticated = (req, res, next) => {
   if (req.isAuthenticated()) {
+    console.log("user", req.isAuthenticated());
     return next();
   }
-  res.redirect("/auth/login");
+  res.redirect("/register");
 };
