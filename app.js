@@ -2,30 +2,36 @@ const express = require("express");
 const app = express();
 const AppError = require("./utils/AppError");
 const globalErrorHandler = require("./controller/errorController");
-const userRouter = require("./route/userRouter");
-const viewRouter = require("./route/viewRouter");
+//routers
+const userRouter = require("./router/userRouter");
+const viewRouter = require("./router/viewRouter");
+const templateRouter = require("./router/templateRouter");
+const paymentRouter = require("./router/paymentRouter");
+const dashboardRouter = require("./router/dashboardRouter")
+const pricePlanRouter = require("./router/pricePlanRouter")
+const payment = require("./router/payment");
 const cookieParser = require("cookie-parser");
-const ejs = require("ejs");
+const paypal = require("./controller/paymentController");
+const bodyParser = require("body-parser");
 const path = require("path");
 const session = require("express-session");
 const passport = require("passport");
 const cors = require("cors");
 const compression = require("compression");
+
 require("./utils/configPassport");
 
 // cors
 app.use(cors());
 app.use(compression());
 // body parser
-app.use(express.json());
+app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.json());
 app.use(cookieParser());
 // view engine
 app.use(express.static(path.join(__dirname, "public")));
 app.set("view engine", "ejs");
 app.set("views", path.join(__dirname, "/views"));
-
-app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
 
 // For parsing application/json
 
@@ -37,6 +43,10 @@ app.use(
     saveUninitialized: false,
   })
 );
+//test payment
+// paypal
+// app.use("/", paymentRouter);
+app.use("/api/pay", payment);
 //google OAuth
 app.use(passport.initialize());
 app.use(passport.session());
@@ -45,10 +55,9 @@ app.use(passport.session());
 app.use("/", viewRouter);
 // user route
 app.use("/api/user", userRouter);
-// test route
-app.get("/test", (req, res) => {
-  res.send("Hello World");
-});
+app.use("/api/template", templateRouter);
+app.use("/api/dashboard", dashboardRouter);
+app.use("/api/pricePlan", pricePlanRouter);
 
 app.all("*", (req, res, next) => {
   next(new AppError(`can't find this route ${req.originalUrl} `, 400));

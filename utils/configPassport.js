@@ -8,28 +8,31 @@ passport.use(
       clientID: process.env.GOOGLE_CLIENT_ID,
       clientSecret: process.env.GOOGLE_CLIENT_SECRET,
       callbackURL: "http://localhost:5000/api/user/auth/google/callback",
+      passReqToCallback: true,
     },
-    async (accessToken, refreshToken, profile, done) => {
+    async (request, accessToken, refreshToken, profile, done) => {
       try {
-        let user = await User.findOne({ googleId: profile.id });
-        const checkUser = await User.findOne({
-          email: profile.emails[0].value,
-        });
-        if (!user && !checkUser) {
+        let user = await User.findOne({ email: profile.emails[0].value });
+
+        if (!user) {
           user = await User.create({
             name: profile.displayName,
             email: profile.emails[0].value,
+            avatar: profile.photos[0].value,
             googleId: profile.id,
             isActive: true,
             password: process.env.DEFAULT_PASSWORD,
             confirmPassword: process.env.DEFAULT_PASSWORD,
+            newer: true,
           });
         }
-
-        done(null, user);
+        if (!user.googleId) {
+          user.googleId = profile.id;
+          await user.save({ validateBeforeSave: false });
+        }
+        return done(null, user);
       } catch (err) {
-        console.log(err);
-        done(err, null);
+        return done(err, null);
       }
     }
   )
@@ -47,3 +50,5 @@ passport.deserializeUser(async (id, done) => {
     done(error);
   }
 });
+
+module.exports = passport;

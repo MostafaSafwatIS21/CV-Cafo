@@ -2,7 +2,7 @@ document.getElementById("responseFrame").onload = function() {
   var iframe = document.getElementById("responseFrame");
   var responseText;
   var url = iframe.dataset.url;
-  console.log("URL:", url);
+
   // Access the iframe's document and get the response text
   if (iframe.contentDocument) {
     responseText = iframe.contentDocument.body.innerText;
@@ -11,23 +11,27 @@ document.getElementById("responseFrame").onload = function() {
     responseText = iframe.contentWindow.document.body.innerText;
   }
 
-  // // Debugging logs
-  // console.log('Response Text:', responseText);
-  // console.log('Iframe content:', iframe.contentDocument ? iframe.contentDocument.body.innerHTML : 'No content');
+  // Debugging logs
+  console.log("Response Text:", responseText);
+  console.log(
+    "Iframe content:",
+    iframe.contentDocument
+      ? iframe.contentDocument.body.innerHTML
+      : "No content"
+  );
 
-  if ((responseText, url)) {
+  if (responseText) {
     try {
       var response = JSON.parse(responseText);
-      // console.log('Parsed Response:', response);
+      console.log("Parsed Response:", response);
       if (response.status === "success") {
         showAlert(response.message, "alert-success");
         window.setTimeout(function() {
           if (response.token) {
-            console.log("Token:", response.token);
             window.location.href =
               `/${url}?token=` + encodeURIComponent(response.token);
-          } else {
-            window.location.href = url;
+          } else if (url) {
+            window.location.href = `/${url}`;
           }
         }, 2000);
       } else {
@@ -40,7 +44,7 @@ document.getElementById("responseFrame").onload = function() {
       var errorMessageDiv = document.getElementById("errorMessage");
       errorMessageDiv.style.display = "block";
       errorMessageDiv.innerText = "Error parsing response: " + responseText;
-      // showAlert('Error parsing response: ' + responseText, 'alert-error');
+      showAlert("Error parsing response: " + responseText, "alert-error");
     }
   } else {
     // Display error message in the div for no response text
@@ -49,6 +53,7 @@ document.getElementById("responseFrame").onload = function() {
     errorMessageDiv.innerText = "something went wrong! please try again.";
   }
 };
+
 function showAlert(message, className) {
   var alertElement = document.createElement("div");
   alertElement.textContent = message;

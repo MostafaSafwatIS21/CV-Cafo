@@ -2,15 +2,17 @@ const AppError = require("../utils/AppError");
 const catchAsync = require("../utils/catchAsync");
 const jwt = require("jsonwebtoken");
 const User = require("../models/userModel");
-const { sendEmail } = require("../utils/sendEmail");
+const { sendEmail, } = require("../utils/sendEmail");
 const ejs = require("ejs");
 const path = require("path");
 const { sendToken } = require("../utils/jwt");
 const crypto = require("crypto");
+const passport = require("passport");
 
 /**
  * @abstract protect routes
  */
+
 
 exports.protect = catchAsync(async (req, res, next) => {
   const { accessToken, refreshToken } = req.cookies;
@@ -21,11 +23,11 @@ exports.protect = catchAsync(async (req, res, next) => {
     token = refreshToken;
   }
   if (!token) {
-    return next(new AppError("Please log in to access resources.", 401));
+    return next(new AppError("Please log in to access resources", 401));
   }
   let decodedToken;
   try {
-    decodedToken = jwt.verify(token, process.env.ACCESS_TOKEN);
+    decodedToken = jwt.verify(token, process.env.SECRET_KEY_JWT);
   } catch (err) {
     return next(new AppError("Invalid token. Please log in again.", 401));
   }
@@ -48,7 +50,7 @@ exports.isLoggedIn = catchAsync(async (req, res, next) => {
   if (req.cookies.refreshToken) {
     const decodedToken = jwt.verify(
       req.cookies.refreshToken,
-      process.env.REFRESH_TOKEN
+      process.env.SECRET_KEY_JWT
     );
 
     const user = await User.findById(decodedToken.id);
@@ -59,6 +61,17 @@ exports.isLoggedIn = catchAsync(async (req, res, next) => {
     return next();
   }
   return next();
+});
+
+/**
+ * @last active user
+ * */
+exports.updateLastActive = catchAsync(async (req, res, next) => {
+  if (req.user) {
+    req.user.lastActive = Date.now();
+    await req.user.save({ validateBeforeSave: false });
+  }
+  next();
 });
 /**
  * @abstract check if user is admin
@@ -75,14 +88,27 @@ exports.isAdmin = catchAsync(async (req, res, next) => {
   next();
 });
 
-//
-
 /**
  * @register
  * @method POST
  * @public
  */
+/**
+ *@desc check if this user block
+ *
+ * */
 
+exports.isBlocked = catchAsync(async (req, res, next) => {
+  const userId = req.user.id;
+  const user = await User.findById(userId);
+
+  if (user.isBlocked) {
+    return next(
+      new AppError("You do not have permission to perform any action please contact with admin.", 403)
+    );
+  }
+  next();
+})
 // this for activate email
 const activationToken = (user) => {
   const activationCode = Math.floor(1000 + Math.random() * 90).toString();
@@ -103,23 +129,9 @@ exports.signup = catchAsync(async (req, res, next) => {
 
   if (checkEmail) {
     return next(new AppError("This account has been register before", 400));
-    // res
-    //   .status(201)
-    //   .redirect(
-    //     `/Register?message=${encodeURIComponent(
-    //       `This account has been register before`
-    //     )}`
-    //   );
   }
   if (req.body.password !== req.body.confirmPassword) {
     return next(new AppError("password and confirm password not match", 400));
-    // res
-    //   .status(201)
-    //   .redirect(
-    //     `/Register?message=${encodeURIComponent(
-    //       `password and confirm password not match`
-    //     )}`
-    //   );
   }
   const user = {
     name: req.body.name,
@@ -172,11 +184,8 @@ exports.activateUser = catchAsync(async (req, res, next) => {
 
   token.user.isActive = true;
 
-  try {
-    const user = await User.create(token.user);
-  } catch (error) {
-    next(new AppError("something went wrong plese try again later", 500));
-  }
+  const user = await User.create(token.user);
+
   res.status(201).json({
     status: "success",
     message: "User Created Successfully you can login now!",
@@ -196,7 +205,7 @@ exports.login = catchAsync(async (req, res, next) => {
   }
   const user = await User.findOne({ email }).select("+password");
   if (!user) {
-    return next(new AppError("user not found", 400));
+    return next(new AppError("password or email not correct", 400));
   }
   const checkPassword = await user.correctPassword(password, user.password);
   if (!checkPassword) {
@@ -216,7 +225,7 @@ exports.login = catchAsync(async (req, res, next) => {
 exports.logout = catchAsync(async (req, res, next) => {
   const userId = req.user.id;
   const accessToken = req.cookies.accessToken;
-  const decodedToken = jwt.verify(accessToken, process.env.ACCESS_TOKEN);
+  const decodedToken = jwt.verify(accessToken, process.env.SECRET_KEY_JWT);
   if (decodedToken.id !== userId) {
     next(new AppError("you are not allowed to do this action", 401));
   }
@@ -293,9 +302,9 @@ exports.forgetPassword = catchAsync(async (req, res, next) => {
 
   const resetURL = `${req.protocol}://${req.get(
     "host"
-  )}/api/user/reset-password/${resetToken}`;
+  )}/reset-password/${resetToken}`;
 
-  const message = `Forgot your password? Submit a PATCH request with your new password and confirmPassword to: ${resetURL}.\nIf you didn't forget your password, please ignore this email!`;
+  const message = `Forgot your password? Submit a PATCH request with your new password and confirm password to: ${resetURL}.\nIf you didn't forget your password, please ignore this email!`;
   const data = { user: { name: user.name }, message };
 
   try {
@@ -324,10 +333,9 @@ exports.forgetPassword = catchAsync(async (req, res, next) => {
     return next(new AppError("something went worng", 500));
   }
 });
-
 /**
  *@abstract reset password
- @method PATCH
+ *@method PATCH
  */
 exports.resetPassword = catchAsync(async (req, res, next) => {
   const { token } = req.params;
@@ -346,22 +354,31 @@ exports.resetPassword = catchAsync(async (req, res, next) => {
   }
 
   const { confirmPassword, password } = req.body;
+  console.log("password", password, "confirmPassword", confirmPassword);
   if (!password || !confirmPassword) {
     return next(
-      new AppError("please provide password and confirmPassword", 400)
+      new AppError("please provide password and confirm password", 400)
     );
   }
 
-  user.password = req.body.password;
-  user.confirmPassword = req.body.confirmPassword;
+  try {
+    user.password = req.body.password;
+    user.confirmPassword = req.body.confirmPassword;
 
-  user.passwordResetToken = undefined;
-  user.passwordResetExpires = undefined;
-  await user.save();
+    user.passwordResetToken = undefined;
+    user.passwordResetExpires = undefined;
+    await user.save();
 
-  user.password = undefined;
-  user.confirmPassword = undefined;
-  sendToken(user, 200, res);
+    // user.password = undefined;
+    // user.confirmPassword = undefined;
+  } catch (error) {
+    return next(new AppError(error, 500));
+  }
+
+  res.status(200).json({
+    status: "success",
+    message: "password reset successfully you can login now!",
+  });
 });
 
 /**
@@ -388,42 +405,57 @@ exports.deleteMe = catchAsync(async (req, res, next) => {
 /**
  * @abstract google auth
  */
-const signToken = (id) => {
-  return jwt.sign({ id }, process.env.ACCESS_TOKEN, {
-    expiresIn: process.env.ACCESS_TOKEN_EXPIRES,
-  });
-};
-exports.googleCallback = (req, res) => {
-  try {
-    const token = signToken(req.user._id);
 
-    res.redirect(`/set-password`);
-  } catch (error) {
-    console.log(error);
-  }
-};
+exports.googleAuthCallback = (req, res, next) => {
+  passport.authenticate("google", (err, user, info) => {
+    if (err) {
+      console.error("Google Auth Error:", err);
+      return res.status(400).json({
+        status: "fail",
+        message: `Google Auth Error: ${err.message}`,
+        error: err,
+      });
+    }
+    if (!user) {
+      console.error("No user found after authentication");
+      return res.status(400).json({
+        status: "fail",
+        message: "No user found after authentication",
+      });
+    }
 
+    req.logIn(user, (err) => {
+      if (err) {
+        console.error("Login Error:", err);
+        return res.status(500).json({
+          status: "error",
+          message: "Login Error",
+          error: err,
+        });
+      }
+
+      // Check if user is new and redirect to set-password
+      if (user.isNew) {
+        return res.redirect("/set-password");
+      }
+
+      sendToken(user, 200, res); // Set cookies for the logged-in user
+      // return res.redirect("/dashboard");
+    });
+  })(req, res, next);
+};
 /**
  * @abstract set password for user that signup with google
  */
 
 exports.setPassword = catchAsync(async (req, res, next) => {
   const userid = req.user._id;
-  console.log("user", req.user, "body", req.body);
 
-  console.log("user id", userid);
   const { password, confirmPassword } = req.body;
   if (!password || !confirmPassword) {
-    // return next(
-    //   new AppError("please provide password and confirmPassword", 400)
-    // );
-    res
-      .status(201)
-      .redirect(
-        `/set-password?message=${encodeURIComponent(
-          `please provide password and confirmPassword`
-        )}`
-      );
+    return next(
+      new AppError("please provide password and confirmPassword", 400)
+    );
   }
   const user = await User.findById(userid);
   if (!user) {
@@ -431,12 +463,14 @@ exports.setPassword = catchAsync(async (req, res, next) => {
   }
   user.password = password;
   user.confirmPassword = confirmPassword;
+  user.newer = false;
+
   await user.save();
-  // res.status(201).json({
-  //   status: "success",
-  //   message: "password set successfully",
-  // });
-  res.redirect("/Login");
+
+  res.status(201).json({
+    status: "success",
+    message: "password set successfully",
+  });
 });
 
 /**
@@ -444,7 +478,6 @@ exports.setPassword = catchAsync(async (req, res, next) => {
  *
  *
  *  */
-
 module.exports.ensureAuthenticated = (req, res, next) => {
   if (req.isAuthenticated()) {
     console.log("user", req.isAuthenticated());
@@ -452,3 +485,8 @@ module.exports.ensureAuthenticated = (req, res, next) => {
   }
   res.redirect("/register");
 };
+
+/**
+ * @abstract user controller
+ *
+ */

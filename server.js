@@ -1,13 +1,11 @@
 const mongoose = require("mongoose");
-const dotenv = require("dotenv").config();
+require("dotenv").config();
 const app = require("./app");
-const port = process.env.PORT || 200;
+const port = process.env.PORT || 2000;
 // connect to database
 const DB_URL = process.env.BADABASE_LOCAL;
 mongoose
   .connect(DB_URL, {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
     serverSelectionTimeoutMS: 5000,
     socketTimeoutMS: 45000,
   })

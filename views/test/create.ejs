@@ -1,0 +1,26 @@
+views/payment/create.ejs
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Create Payment</title>
+</head>
+<body>
+<h1>Select Subscription Plan</h1>
+<form action="/create-payment" method="POST">
+  <select name="duration">
+    <option value="month">1 Month </option>
+    <option value="year">1 Year </option>
+  </select>
+  <select name="name">
+    <option value="Pro">Pro</option>
+    <option value="Premium">Premium</option>
+  </select>
+  <select name="paymentMethod">
+    <option value="paypal">PayPal</option>
+    <option value="paymob">PayMob</option>
+  </select>
+  <button type="submit">Subscribe</button>
+</form>
+</body>
+</html>
