@@ -135,9 +135,15 @@ function togglecode2(event) {
 
 function togglecodewrite1() {
   var codewrite1 = document.getElementById("codewrite1");
+  var codewrite = document.getElementById("text-ae42");
+  var codewrite2 = document.getElementById("cardNumberInput");
   if (codewrite1.classList.contains("hidden")) {
     codewrite1.classList.remove("hidden");
+    codewrite.classList.remove("hidden");
+    codewrite2.classList.remove("hidden");
   } else {
     codewrite1.classList.add("hidden");
+    codewrite.classList.add("hidden");
+    codewrite2.classList.add("hidden");
   }
 }
