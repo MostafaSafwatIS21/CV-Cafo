@@ -1,18 +1,16 @@
-const pricePlan = require("../models/pricePlanModel")
-const catchAsync = require("../utils/catchAsync")
-const AppError = require("../utils/appError")
-
+const pricePlan = require("../models/pricePlanModel");
+const catchAsync = require("../utils/catchAsync");
+const AppError = require("../utils/AppError");
 
 exports.createPlan = catchAsync(async (req, res, next) => {
-  console.log(req.body)
-    const newPlan = await pricePlan.create(req.body)
-    res.status(201).json({
-        status: "success",
-        data: {
-            plan: newPlan
-        }
-    })
-})
+  const newPlan = await pricePlan.create(req.body);
+  res.status(201).json({
+    status: "success",
+    data: {
+      plan: newPlan,
+    },
+  });
+});
 
 /**
  * @api {patch} /update-plan/:name/:duration Update a plan
@@ -21,18 +19,42 @@ exports.createPlan = catchAsync(async (req, res, next) => {
  * */
 
 exports.updatePlan = catchAsync(async (req, res, next) => {
-  const {id} = req.params
-  console.log(id)
-  const body = req.body;
-  console.log(body)
-    const updatedPlan = await pricePlan.findByIdAndUpdate(id,{
-      price: req.body?.price,
-      features: req.body?.features
-    },{new: true,
-      runValidators: true
-    })
+  const { name, duration } = req.body;
+  const updatedPlan = await pricePlan.findOneAndUpdate(
+    { name, duration },
+    {
+      price: req.body.price,
+      duration,
+      features: [
+        { name: "resume", quantity: req.body.resumeQuantity },
+        { name: "cover letter", quantity: req.body.coverLetterQuantity },
+        { name: "job tracker", quantity: req.body.jobTrackerQuantity },
+        {
+          name: "personal website",
+          quantity: req.body.personalWebsiteQuantity,
+        },
+        { name: "email signature", quantity: req.body.emailSignatureQuantit },
+      ],
+    }
+  );
   res.status(201).json({
-    status:"success",
-    updatedPlan
-  })
-})
+    status: "success",
+    message: "Plan updated successfully",
+  });
+});
+
+/**
+ * @api {get} /getPricing Get pricing
+ *
+ *
+ * */
+exports.getPricing = catchAsync(async (req, res, next) => {
+  const { name, duration } = req.query;
+  const plan = await pricePlan.findOne({ name, duration });
+
+  console.log(plan);
+  res.status(200).json({
+    status: "success",
+    plan,
+  });
+});

@@ -120,6 +120,9 @@ const createPayMobOrder = async (price, duration, req) => {
 
 exports.createPayment = catchAsync(async (req, res, next) => {
   const { duration, paymentMethod } = req.body;
+  if (!duration || paymentMethod) {
+    next(new AppError("Please fill all failds"));
+  }
 
   let price;
   if (duration === "1-month") {

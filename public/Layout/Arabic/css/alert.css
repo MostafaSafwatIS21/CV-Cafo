@@ -1,0 +1,46 @@
+/* Alert Container */
+.alert {
+    position: fixed;
+    top: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    min-width: 250px;
+    padding: 15px;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    font-family: Arial, sans-serif;
+    font-size: 16px;
+    z-index: 1000;
+    opacity: 0;
+    transition: opacity 0.5s, transform 0.5s;
+}
+
+/* Success Alert */
+.alert-success {
+    background-color: #4caf50;
+    color: white;
+}
+
+/* Error Alert */
+.alert-error {
+    background-color: #f44336;
+    color: white;
+}
+
+/* Info Alert */
+.alert-info {
+    background-color: #2196f3;
+    color: white;
+}
+
+/* Warning Alert */
+.alert-warning {
+    background-color: #ff9800;
+    color: white;
+}
+
+/* Show alert */
+.alert.show {
+    opacity: 1;
+    transform: translate(-50%, 0);
+}

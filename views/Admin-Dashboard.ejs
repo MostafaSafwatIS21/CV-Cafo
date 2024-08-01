@@ -1,0 +1,1679 @@
+<!DOCTYPE html>
+<html style="font-size: 16px;" lang="en">
+
+<head>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="utf-8">
+  <meta name="keywords" content="">
+  <meta name="description" content="">
+  <title>user Dashboard</title>
+  <link rel="stylesheet" href="Includes/Libraries/Bootstrap/bootstrap.css" media="screen">
+  <link rel="stylesheet" href="Layout/Arabic/css/alert.css" media="screen">
+  <link rel="stylesheet" href="Layout/Arabic/css/admin-Dashboard.css" media="screen">
+  <script class="u-script" type="text/javascript" src="Includes/Libraries/JQuery/jquery.js" defer="">
+  </script>
+  <script class="u-script" type="text/javascript" src="Includes/Libraries/Bootstrap/bootstrap.js" defer="">
+  </script>
+  <style>
+    /* styles.css */
+    .show {
+      display: block;
+    }
+
+    .hidden {
+      display: none;
+    }
+  </style>
+
+  <link id="u-theme-google-font" rel="stylesheet" href="https://fonts.googleapis.com/css?family=Cairo:200,300,400,500,600,700,800,900|Tajawal:200,300,400,500,700,800,900">
+  <meta data-intl-tel-input-cdn-path="intlTelInput/">
+</head>
+
+<body data-path-to-root="./" data-include-products="false" class="u-body u-xxl-mode" data-lang="en">
+  <section class="u-clearfix u-valign-middle-lg u-valign-middle-md u-valign-middle-sm u-valign-middle-xl u-valign-middle-xs u-section-1 show" id="section1">
+    <div class="data-layout-selected padding u-clearfix u-expanded-width u-gutter-20 u-layout-wrap u-layout-wrap-1">
+      <div class="u-layout">
+        <div class="u-layout-row">
+          <div class="u-container-style u-layout-cell u-size-47-md u-size-47-sm u-size-47-xs u-size-49-lg u-size-49-xl u-size-49-xxl u-layout-cell-1">
+            <div class="u-container-layout u-container-layout-1">
+              <div class="u-container-style u-expanded-width u-group u-white u-group-1">
+                <div class="u-container-layout u-container-layout-2">
+                  
+                  <%if(user){%>
+                  <% if(user.googleId) { %>
+                  <img class="u-image u-image-circle u-image-1" src="<%= user.avatar %>" alt="<%=user.name%>" data-image-width="1280" data-image-height="853">
+                  <% } else if(!user.googleId) { %>
+                  <img class="u-image u-image-circle u-image-1" src="/img/users/<%= user.avatar %>" alt="<%=user.name%>" data-image-width="1280" data-image-height="853">
+                  <% } %>
+                  
+
+                                    <h5 class="u-align-right u-text u-text-default u-text-1"><%=user.name%><br>
+                  <span style="font-weight: 400;">مسؤول الموقع</span>
+                  </h5>
+                  <h5 class="u-align-right u-text u-text-default u-text-palette-5-dark-1 u-text-2">
+                    لوحة التحكم</h5>
+                  <%}%>
+                                </div>
+                            </div>
+                            <div class="padding-rtl u-expanded-width u-list u-list-1">
+                                <div class="u-repeater u-repeater-1">
+                                    <div
+                                        class="u-container-style u-hover-feature u-list-item u-radius u-repeater-item u-shape-round u-white u-list-item-1">
+                                        <div class="u-container-layout u-similar-container u-container-layout-3"><span
+                                                class="u-custom-color-3 u-file-icon u-icon u-icon-rounded u-radius u-text-white u-icon-1"
+                                                data-animation-name="customAnimationIn"
+                                                data-animation-duration="1000"><img
+                                                    src="Layout/images/3126647-37e670d1.png" alt=""></span>
+                                            <h5
+                                                class="u-align-right u-text u-text-custom-color-7 u-text-default u-text-3">
+                                                العملاء </h5>
+                                            <h4 class="u-align-right u-text u-text-palette-5-dark-2 u-text-4"
+                                                data-animation-name="counter" data-animation-event="scroll"
+                                                data-animation-duration="2000"><%=usersCount%> </h4>
+                  <h6 class="u-align-right u-text u-text-custom-color-7 u-text-5">
+                    <span class="u-text-custom-color-5">55%</span> عن الاسبوع الماضي
+                  </h6>
+                </div>
+              </div>
+              <div class="u-container-style u-hover-feature u-list-item u-radius u-repeater-item u-shape-round u-white u-list-item-2">
+                <div class="u-container-layout u-similar-container u-container-layout-4"><span class="u-custom-color-7 u-file-icon u-icon u-icon-rounded u-radius u-text-white u-icon-2" data-animation-name="customAnimationIn" data-animation-duration="1000"><img src="Layout/images/879859-1167d44c.png" alt=""></span>
+                  <h5 class="u-align-right u-text u-text-custom-color-7 u-text-default u-text-6">
+                    المبيعات</h5>
+                  <h4 class="u-align-right u-text u-text-palette-5-dark-2 u-text-7" data-animation-name="counter" data-animation-event="scroll" data-animation-duration="2000">$<%=totalSales%></h4>
+                  <h6 class="u-align-right u-text u-text-custom-color-7 u-text-8">
+                    <span class="u-text-custom-color-5">10%</span> عن الاسبوع الماضي
+                  </h6>
+                </div>
+              </div>
+              <div class="u-container-style u-hover-feature u-list-item u-radius u-repeater-item u-shape-round u-white u-list-item-3">
+                <div class="u-container-layout u-similar-container u-container-layout-5"><span class="u-custom-color-5 u-file-icon u-icon u-icon-rounded u-radius u-text-white u-icon-3" data-animation-name="customAnimationIn" data-animation-duration="1000"><img src="Layout/images/2583118-a805875b.png" alt=""></span>
+                  <h5 class="u-align-right u-text u-text-custom-color-7 u-text-default u-text-9">
+                    الاشراكات</h5>
+                  <h4 class="u-align-right u-text u-text-palette-5-dark-2 u-text-10" data-animation-name="counter" data-animation-event="scroll" data-animation-duration="2000"><%=countUser%></h4>
+                  <h6 class="u-align-right u-text u-text-custom-color-7 u-text-11">
+                    <span class="u-text-custom-color-8">2% </span>عن الاسبوع الماضي
+                  </h6>
+                </div>
+              </div>
+              <div class="u-container-style u-hover-feature u-list-item u-radius u-repeater-item u-shape-round u-white u-list-item-4">
+                <div class="u-container-layout u-similar-container u-container-layout-6"><span class="u-custom-color-6 u-file-icon u-icon u-icon-rounded u-radius u-text-white u-icon-4" data-animation-name="customAnimationIn" data-animation-duration="500" data-animation-delay="0"><img src="Layout/images/2611558-3e4ab628.png" alt=""></span>
+                  <h5 class="u-align-right u-text u-text-custom-color-7 u-text-default u-text-12">
+                    القوالب</h5>
+                  <h4 class="u-align-right u-text u-text-palette-5-dark-2 u-text-13" data-animation-name="counter" data-animation-event="scroll" data-animation-duration="2000"><%=countTemplates%></h4>
+                  <h6 class="u-align-right u-text u-text-custom-color-7 u-text-14">0% عن
+                    الاسبوع الماضي</h6>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="u-container-style u-expanded-width u-group u-hover-feature u-radius u-shape-round u-white u-group-2" data-animation-name="customAnimationIn" data-animation-duration="1000" data-animation-delay="0">
+            <div class="u-container-layout u-container-layout-7">
+              <h4 class="u-align-right u-text u-text-custom-color-7 u-text-default u-text-15">
+                الباقات<span style="font-weight: 700;"></span>
+              </h4>
+              <a href="#" class="u-border-0 u-btn u-button-style u-hover-feature u-hover-white u-none u-text-custom-color-3 u-btn-1"><span class="u-file-icon u-icon u-text-custom-color-3 u-icon-5"><img src="Layout/images/152351-34515270.png" alt=""></span>&nbsp;تعرف علي
+                المزيد
+              </a>
+              <p class="u-align-right u-small-text u-text u-text-default u-text-palette-5-dark-1 u-text-variant u-text-16">
+                تفاصيل الاشتراكات وباقات العملاء</p>
+              <div class="u-expanded-width u-table u-table-responsive u-table-1">
+                <table class="u-table-entity">
+                  <colgroup>
+                    <col width="25%">
+                    <col width="25%">
+                    <col width="25%">
+                    <col width="25%">
+                  </colgroup>
+                  <thead class="u-align-right u-table-header u-text-palette-5-dark-1 u-table-header-1">
+                    <tr style="height: 47px;">
+                      <th class="u-align-center u-table-cell">الباقات المنتهية </th>
+                      <th class="u-align-center u-table-cell">المبلغ الكلي </th>
+                      <th class="u-align-center u-table-cell">عدد المشتركين </th>
+                      <th class="u-table-cell">الباقة </th>
+                    </tr>
+                  </thead>
+                  <tbody class="u-align-right u-table-body u-text-palette-5-dark-2 u-table-body-1">
+                    <tr style="height: 61px;">
+                      <td class="u-align-center u-table-cell u-table-cell-5"><%=plans.proMonth.expiredUsers%></td>
+                      <td class="u-align-center u-table-cell u-table-cell-6"><%=plans.proMonth.totalPrice%>$</td>
+                      <td class="u-align-center u-table-cell u-table-cell-7"><%=plans.proMonth.count%><span style="font-weight: 700;"></span>
+                      </td>
+                      <td class="u-table-cell u-table-cell-8">الباقة الاساسية الشهرية</td>
+                    </tr>
+                    <tr style="height: 61px;">
+                      <td class="u-align-center u-table-cell u-table-cell-5"><%=plans.proYear.expiredUsers%></td>
+                      <td class="u-align-center u-table-cell u-table-cell-6"><%=plans.proYear.totalPrice%>$</td>
+                      <td class="u-align-center u-table-cell u-table-cell-7"><%=plans.proYear.count%><span style="font-weight: 700;"></span>
+                      </td>
+                      <td class="u-table-cell">الباقة الاساسية السنوية </td>
+                    </tr>
+                    <tr style="height: 61px;">
+                      <td class="u-align-center u-table-cell u-table-cell-5"><%=plans.premiumMonth.expiredUsers%></td>
+                      <td class="u-align-center u-table-cell u-table-cell-6"><%=plans.premiumMonth.totalPrice%>$</td>
+                      <td class="u-align-center u-table-cell u-table-cell-7"><%=plans.premiumMonth.count%><span style="font-weight: 700;"></span>
+                      </td>
+                      <td class="u-table-cell">الباقة البريميم الشهرية </td>
+                    </tr>
+                    <tr style="height: 61px;">
+                      <td class="u-align-center u-table-cell u-table-cell-5"><%=plans.premiumYear.expiredUsers%></td>
+                      <td class="u-align-center u-table-cell u-table-cell-6"><%=plans.premiumYear.totalPrice%>$</td>
+                      <td class="u-align-center u-table-cell u-table-cell-7"><%=plans.premiumYear.count%><span style="font-weight: 700;"></span>
+                      </td>
+                      <td class="u-table-cell">الباقة البريميم السنوية </td>
+                    </tr>
+                    <tr style="height: 61px;">
+                      <td class="u-align-center u-table-cell u-table-cell-5"><%=plans.basicMonth.expiredUsers%></td>
+                      <td class="u-align-center u-table-cell u-table-cell-6"><%=plans.basicMonth.totalPrice%>$</td>
+                      <td class="u-align-center u-table-cell u-table-cell-7"><%=plans.basicMonth.count%><span style="font-weight: 700;"></span>
+                      </td>
+                      <td class="u-table-cell">الباقة المجانية </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="u-container-style u-gradient u-layout-cell u-radius u-shape-round u-size-11-lg u-size-11-xl u-size-11-xxl u-size-13-md u-size-13-sm u-size-13-xs u-layout-cell-2">
+        <div class="u-container-layout u-container-layout-8">
+          <div class="u-expanded-width u-list u-list-2">
+            <div class="u-repeater u-repeater-2">
+              <div onclick="toggleSection(1)" style="cursor: pointer" class="u-container-align-right u-container-style u-custom-color-3 u-custom-item u-list-item u-radius u-repeater-item u-shape-round u-list-item-5">
+                <div class="u-container-layout u-similar-container u-container-layout-9">
+                  <h6 class="u-align-right u-text u-text-body-alt-color u-text-default u-text-17">
+                    لوحة التحكم&nbsp;<span class="u-file-icon u-icon u-text-white u-icon-6"><img src="Layout/images/4725672-bf8ca48a.png" alt="" /></span>
+                  </h6>
+                </div>
+              </div>
+              <div onclick="toggleSection(2)" style="cursor: pointer" class="u-container-align-right u-container-style u-custom-item u-hover-feature u-list-item u-radius u-repeater-item u-shape-round u-list-item-6">
+                <div class="u-container-layout u-similar-container u-container-layout-10">
+                  <h6 class="u-align-right u-text u-text-body-alt-color u-text-default u-text-18">
+                    الباقات​&nbsp;<span class="u-file-icon u-icon u-text-white u-icon-7"><img src="Layout/images/879757-c80d89ad.png" alt="" /></span>
+                  </h6>
+                </div>
+              </div>
+              <div onclick="toggleSection(3)" style="cursor: pointer" class="u-container-align-right u-container-style u-custom-item u-hover-feature u-list-item u-radius u-repeater-item u-shape-round u-list-item-7">
+                <div class="u-container-layout u-similar-container u-container-layout-11">
+                  <h6 class="u-align-right u-text u-text-body-alt-color u-text-default u-text-19">
+                    العملاء&nbsp;<span class="u-file-icon u-icon u-text-white u-icon-8"><img src="Layout/images/3126647-37e670d1.png" alt="" /></span>
+                  </h6>
+                </div>
+              </div>
+              <div onclick="toggleSection(4)" style="cursor: pointer" class="u-container-align-right u-container-style u-custom-item u-hover-feature u-list-item u-radius u-repeater-item u-shape-round u-list-item-8">
+                <div class="u-container-layout u-similar-container u-container-layout-12">
+                  <h6 class="u-align-right u-text u-text-body-alt-color u-text-default u-text-20">
+                    القوالب​&nbsp;<span class="u-file-icon u-icon u-text-white u-icon-9"><img src="Layout/images/2611701-5bf827d3.png" alt="" /></span>
+                  </h6>
+                </div>
+              </div>
+              <div onclick="toggleSection(5)" style="cursor: pointer" class="u-container-align-right u-container-style u-custom-item u-hover-feature u-list-item u-radius u-repeater-item u-shape-round u-list-item-9">
+                <div class="u-container-layout u-similar-container u-container-layout-13">
+                  <h6 class="u-align-right u-text u-text-body-alt-color u-text-default u-text-21">
+                    الصفحات​&nbsp;<span class="u-file-icon u-icon u-text-white u-icon-10"><img src="Layout/images/3650317-11f1865c.png" alt="" /></span>
+                  </h6>
+                </div>
+              </div>
+              <div onclick="toggleSection(6)" style="cursor: pointer" class="u-container-align-right u-container-style u-custom-item u-hover-feature u-list-item u-radius u-repeater-item u-shape-round u-list-item-10">
+                <div class="u-container-layout u-similar-container u-container-layout-14">
+                  <h6 class="u-align-right u-text u-text-body-alt-color u-text-default u-text-22">
+                    باركود​&nbsp;<span class="u-file-icon u-icon u-text-white u-icon-11"><img src="Layout/images/3867237-82c8a9c1.png" alt="" /></span>
+                  </h6>
+                </div>
+              </div>
+            </div>
+          </div>
+          <a href="/" class="u-align-center u-border-2 u-border-hover-custom-color-3 u-border-white u-btn u-btn-round u-button-style u-hover-custom-color-3 u-hover-feature u-none u-radius u-btn-2">الصفحة الرئيسية
+          </a>
+          <a href="#" class="u-align-center u-border-2 u-border-hover-custom-color-3 u-border-white u-btn u-btn-round u-button-style u-hover-custom-color-3 u-hover-feature u-none u-radius u-btn-3">تواصل مع المطور
+          </a>
+        </div>
+      </div>
+    </div>
+    </div>
+    </div>
+  </section>
+  <section class="u-clearfix u-valign-middle u-section-2 hidden" id="section2">
+    <div class="data-layout-selected padding u-clearfix u-expanded-width u-gutter-20 u-layout-wrap u-layout-wrap-1">
+      <div class="u-layout">
+        <div class="u-layout-row">
+          <div class="u-container-style u-layout-cell u-size-47-md u-size-47-sm u-size-47-xs u-size-49-lg u-size-49-xl u-size-49-xxl u-layout-cell-1">
+            <div class="u-container-layout u-container-layout-1">
+              <div class="u-container-style u-expanded-width u-group u-white u-group-1">
+                <div class="u-container-layout u-container-layout-2">
+                  <%if(user){%>
+                  <%if(user){%>
+                  <% if(user.googleId) { %>
+                  <img class="u-image u-image-circle u-image-1" src="<%= user.avatar %>" alt="<%=user.name%>" data-image-width="1280" data-image-height="853">
+                  <% } else if(!user.googleId) { %>
+                  <img class="u-image u-image-circle u-image-1" src="/img/users/<%= user.avatar %>" alt="<%=user.name%>" data-image-width="1280" data-image-height="853">
+                  <% } %>
+                  <%}%>
+
+                                    <h5 class="u-align-right u-text u-text-default u-text-1"><%=user.name%><br>
+                  <span style="font-weight: 400;">مسؤول الموقع</span>
+                  </h5>
+                  <h5 class="u-align-right u-text u-text-default u-text-palette-5-dark-1 u-text-2">
+                    الباقات​ </h5>
+                  <%}%>
+                                </div>
+                            </div>
+                            <div class="u-expanded-width u-list u-list-1">
+                                <div class="u-repeater u-repeater-1">
+                                    <div class="u-container-align-center u-container-style u-custom-color-6 u-custom-item u-hover-feature u-list-item u-radius u-repeater-item u-shape-round u-list-item-1"
+                                        data-animation-name="flipIn" data-animation-duration="1000"
+                                        data-animation-delay="0" data-animation-direction="X" onclick="details(4)" style="cursor: pointer;">
+                                        <div
+                                            class="u-container-layout u-similar-container u-valign-middle u-container-layout-3">
+                                            <h4 class="u-align-center u-text u-text-default u-text-3">الباقة البريميم
+                                                السنوية</h4>
+                                        </div>
+                                    </div>
+                                    <div class="u-container-align-center u-container-style u-custom-color-5 u-custom-item u-hover-feature u-list-item u-radius u-repeater-item u-shape-round u-list-item-2"
+                                        data-animation-name="flipIn" data-animation-duration="1000"
+                                        data-animation-delay="0" data-animation-direction="X" onclick="details(3)" style="cursor: pointer;">
+                                        <div
+                                            class="u-container-layout u-similar-container u-valign-middle u-container-layout-4">
+                                            <h4 class="u-align-center u-text u-text-default u-text-4">الباقة البريميم
+                                                الشهرية</h4>
+                                        </div>
+                                    </div>
+                                    <div class="u-container-align-center u-container-style u-custom-color-3 u-custom-item u-hover-feature u-list-item u-radius u-repeater-item u-shape-round u-list-item-3"
+                                        data-animation-name="flipIn" data-animation-duration="1000"
+                                        data-animation-delay="0" data-animation-direction="X" onclick="details(2)" style="cursor: pointer;">
+                                        <div
+                                            class="u-container-layout u-similar-container u-valign-middle u-container-layout-5">
+                                            <h4 class="u-align-center u-text u-text-default u-text-5">الباقة الاساسية
+                                                السنوية</h4>
+                                        </div>
+                                    </div>
+                                    <div class="u-container-align-center u-container-style u-custom-color-8 u-custom-item u-hover-feature u-list-item u-radius u-repeater-item u-shape-round u-list-item-4"
+                                        data-animation-name="flipIn" data-animation-duration="1000"
+                                        data-animation-delay="0" data-animation-direction="X" onclick="details(1)" style="cursor: pointer;">
+                                        <div
+                                            class="u-container-layout u-similar-container u-valign-middle u-container-layout-6">
+                                            <h4 class="u-align-center u-text u-text-default u-text-6">الباقة الاساسية
+                                                الشهرية</h4>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="u-container-style u-group u-radius u-shape-round u-white u-group-2 hidden" id="details1"
+                                data-animation-name="customAnimationIn" data-animation-duration="1000"
+                                data-animation-delay="0">
+                                <div class="u-container-layout u-container-layout-7">
+                                    <h4 class="u-text u-text-custom-color-8 u-text-default u-text-7">الباقة الاساسية
+                                        الشهرية </h4>
+                                    <div class="rtl u-expanded-width u-table u-table-responsive u-table-1">
+                                        <table class="u-table-entity">
+                                            <colgroup>
+                                                <col width="54.2%">
+                                                <col width="45.8%">
+                                            </colgroup>
+                                            <thead class="u-align-center u-table-header u-white u-table-header-1">
+                                                <tr style="height: 51px;">
+                                                    <th
+                                                        class="u-align-right u-palette-5-dark-3 u-table-cell u-table-cell-1">
+                                                        التفاصيل</th>
+                                                    <th class="u-custom-color-8 u-table-cell u-table-cell-2">
+                                                        <b>اساسي</b>
+                                                    </th>
+                                                </tr>
+                                            </thead>
+                                            <tbody
+                                                class="u-align-center u-palette-5-dark-3 u-table-body u-table-body-1">
+                                                <tr style="height: 52px;">
+                                                    <td
+                                                        class="u-align-right u-border-1 u-border-palette-5-dark-2 u-first-column u-table-cell">
+                                                        سيرة ذاتية</td>
+                                                    <td
+                                                        class="u-border-1 u-border-palette-5-dark-2 u-table-cell u-table-cell-4">
+                                                        <%=duration.month[2].features[0].quantity%></td>
+                  </tr>
+                  <tr style="height: 54px;">
+                    <td class="u-align-right u-border-1 u-border-palette-5-dark-2 u-table-cell">
+                      خطاب التغطية</td>
+                    <td class="u-border-2 u-border-no-left u-border-no-right u-border-palette-5-dark-2 u-table-cell u-text-palette-2-base u-table-cell-6">
+                      <%=duration.month[2].features[1].quantity%></td>
+                  </tr>
+                  <tr style="height: 54px;">
+                    <td class="u-align-right u-border-1 u-border-palette-5-dark-2 u-first-column u-table-cell">
+                      تعقب الوظيفة</td>
+                    <td class="u-border-1 u-border-palette-5-dark-2 u-table-cell">
+                      <%if(duration.month[2].features[2].quantity){%>
+                      <span class="u-file-icon u-icon u-text-palette-1-base">
+                        <img src="Layout/images/32282-b6a41c9e.png" alt=""></span>
+                      <%}else{%>
+                      <span class="u-file-icon u-icon u-text-white">
+                        <img src="Layout/images/32178-e26c81cc.png" alt=""></span>
+                      <%}%>
+                                                    </td>
+                                                </tr>
+                                                <tr style="height: 52px;">
+                                                    <td
+                                                        class="u-align-right u-border-1 u-border-palette-5-dark-2 u-first-column u-table-cell">
+                                                        توقيع البريد الإلكتروني</td>
+                                                    <td
+                                                        class="u-border-1 u-border-palette-5-dark-2 u-table-cell u-table-cell-10">
+                                                        <%=duration.month[2].features[4].quantity%>
+                    </td>
+                  </tr>
+                  <tr style="height: 52px;">
+                    <td class="u-align-right u-border-1 u-border-palette-5-dark-2 u-table-cell">
+                      انشاء وحجز مواقع</td>
+                    <td class="u-border-1 u-border-palette-5-dark-2 u-table-cell u-table-cell-12">
+                      <%=duration.month[2].features[3].quantity%></td>
+                  </tr>
+                  <tr style="height: 52px;">
+                    <td class="u-align-right u-border-1 u-border-palette-5-dark-2 u-table-cell">
+                      دعم فني </td>
+                    <td class="u-border-1 u-border-palette-5-dark-2 u-table-cell"><span class="u-file-icon u-icon u-text-palette-1-base"><img src="Layout/images/32282-b6a41c9e.png" alt=""></span>
+                    </td>
+                  </tr>
+                  <tr style="height: 62px;">
+                    <td class="u-align-right u-border-1 u-border-palette-5-dark-2 u-first-column u-table-cell">
+                      الاسعار</td>
+                    <td class="u-border-1 u-border-palette-5-dark-2 u-table-cell u-table-cell-16">
+                      <%=duration.month[2].price%>$ / شهريا</td>
+                  </tr>
+                  </tbody>
+                  </table>
+                </div>
+                <a onclick="form1()" class="u-align-center u-border-2 u-border-custom-color-1 u-border-hover-custom-color-1 u-btn u-btn-round u-button-style u-hover-custom-color-1 u-hover-feature u-none u-radius u-btn-1">
+                  تعديل</a>
+              </div>
+            </div>
+            <div class="rtl  u-form-checks-spacing-0 u-form-1 hidden" id="form1">
+              <form action="/api/dashboard/update-plan" method="post" target="responseFrame" class="u-clearfix u-form-spacing-10  u-inner-form" source="email" name="form" style="padding: 10px;">
+                <input type="text" style="display: none;" name="duration" value="month">
+                <input type="text" style="display: none;" name="name" value="Pro">
+                <div class="u-form-group u-form-name u-form-partition-factor-2 u-label-top">
+                  <label for="name-3793" class="u-label u-label-1">السيرة الذاتية</label>
+                  <input type="text" placeholder="ادخل عدد السيرات الذاتية المتاحة" id="name-3793" value="<%=duration.month[2].features[0].quantity%>" name="resumeQuantity" class="u-border-2 u-border-custom-color-1 u-border-no-left u-border-no-right u-border-no-top u-input u-input-rectangle u-none">
+                </div>
+                <div class="u-form-group u-form-partition-factor-2 u-label-top">
+                  <label for="email-3793" class="u-label u-label-2">خطاب التغطية</label>
+                  <input type="text" placeholder="ادخل عدد خطابات التغطية المتاحة" id="email-3793" value="<%=duration.month[2].features[1].quantity%>" name="coverLetterQuantity" class="u-border-2 u-border-custom-color-1 u-border-no-left u-border-no-right u-border-no-top u-input u-input-rectangle u-none">
+                </div>
+                <div class="u-form-group u-form-partition-factor-2 u-label-top u-form-group-3">
+                  <label for="text-3d8a" class="u-label u-label-3">توقيع البريد الالكتروني</label>
+                  <input type="text" placeholder="ادخل عدد توقيعات الريد الالكتروني" value="<%=duration.month[2].features[4].quantity%>" id="text-3d8a" name="emailSignatureQuantit" class="u-border-2 u-border-custom-color-1 u-border-no-left u-border-no-right u-border-no-top u-input u-input-rectangle u-none">
+                </div>
+                <div class="u-form-group u-form-partition-factor-2 u-label-top u-form-group-4">
+                  <label for="text-1c35" class="u-label u-label-4">انشاء وحجز موقع</label>
+                  <input type="text" placeholder="ادخل عدد انشاءات وحجز موقع متاحه" id="text-1c35" value="<%=duration.month[2].features[3].quantity%>" name="personalWebsiteQuantity" class="u-border-2 u-border-custom-color-1 u-border-no-left u-border-no-right u-border-no-top u-input u-input-rectangle u-none">
+                </div>
+                <div class="u-form-checkbox u-form-group u-form-partition-factor-2 u-label-top u-form-group-5">
+                  <input type="checkbox" id="checkbox-b5cc" name="jobTrackerQuantity" value="1" class="u-field-input" checked="checked">
+                  <label for="checkbox-b5cc" class="u-field-label" style="font-weight: 700; font-size: 1.125rem;">تعقب الوظيفة</label>
+                </div>
+                <div class="u-form-checkbox u-form-group u-form-partition-factor-2 u-label-top u-form-group-6">
+                  <input type="checkbox" id="checkbox-e6ca" name="support" value="<%=duration.month[2].features[2].quantity%>" class="u-field-input" checked="checked">
+                  <label for="checkbox-e6ca" class="u-field-label" style="font-weight: 700; font-size: 1.125rem;">دعم فني</label>
+                </div>
+                <div class="u-form-group u-label-top u-form-group-7">
+                  <label for="text-a438" class="u-label u-label-5">السعر</label>
+                  <input type="text" placeholder="ادخل سعر الاشتراك الحالي" id="text-a438" value="<%=duration.month[2].price%>" name="price" class="u-border-2 u-border-custom-color-1 u-border-no-left u-border-no-right u-border-no-top u-input u-input-rectangle u-none">
+                </div>
+                <div class="u-align-left u-form-group  u-label-top">
+                  <button class=" u-btn-round  u-button-style u-custom-color-1 u-radius u-btn-2">تعديل
+                  </button>
+
+                </div>
+              </form>
+            </div>
+            <div class="u-container-style u-group u-radius u-shape-round u-white u-group-3 hidden" id="details2" data-animation-name="customAnimationIn" data-animation-duration="1000" data-animation-delay="0">
+              <div class="u-container-layout u-container-layout-8">
+                <h4 class="u-text u-text-custom-color-3 u-text-default u-text-8">
+                  الباقة الاساسية السنوية
+                </h4>
+                <div class="rtl u-expanded-width u-table u-table-responsive u-table-2">
+                  <table class="u-table-entity">
+                    <colgroup>
+                      <col width="54.2%" />
+                      <col width="45.8%" />
+                    </colgroup>
+                    <thead class="u-align-center u-table-header u-white u-table-header-2">
+                      <tr style="height: 51px">
+                        <th class="u-align-right u-palette-5-dark-3 u-table-cell u-table-cell-17">
+                          التفاصيل
+                        </th>
+                        <th class="u-custom-color-3 u-table-cell u-table-cell-18">
+                          <b>اساسي</b>
+                        </th>
+                      </tr>
+                    </thead>
+                    <tbody class="u-align-center u-palette-5-dark-3 u-table-body u-table-body-2">
+                      <tr style="height: 52px">
+                        <td class="u-align-right u-border-1 u-border-palette-5-dark-2 u-first-column u-table-cell">
+                          سيرة ذاتية
+                        </td>
+                        <td class="u-border-1 u-border-palette-5-dark-2 u-table-cell u-table-cell-20">
+                          3
+                        </td>
+                      </tr>
+                      <tr style="height: 54px">
+                        <td class="u-align-right u-border-1 u-border-palette-5-dark-2 u-table-cell">
+                          خطاب التغطية
+                        </td>
+                        <td class="u-border-2 u-border-no-left u-border-no-right u-border-palette-5-dark-2 u-table-cell u-text-palette-2-base u-table-cell-22">
+                          15
+                        </td>
+                      </tr>
+                      <tr style="height: 54px">
+                        <td class="u-align-right u-border-1 u-border-palette-5-dark-2 u-first-column u-table-cell">
+                          تعقب الوظيفة
+                        </td>
+                        <td class="u-border-1 u-border-palette-5-dark-2 u-table-cell">
+                          <span class="u-file-icon u-icon u-text-palette-1-base"><img src="Layout/images/32282-b6a41c9e.png" alt="" /></span>
+                        </td>
+                      </tr>
+                      <tr style="height: 52px">
+                        <td class="u-align-right u-border-1 u-border-palette-5-dark-2 u-first-column u-table-cell">
+                          توقيع البريد الإلكتروني
+                        </td>
+                        <td class="u-border-1 u-border-palette-5-dark-2 u-table-cell u-table-cell-26">
+                          15
+                        </td>
+                      </tr>
+                      <tr style="height: 52px">
+                        <td class="u-align-right u-border-1 u-border-palette-5-dark-2 u-table-cell">
+                          انشاء وحجز مواقع
+                        </td>
+                        <td class="u-border-1 u-border-palette-5-dark-2 u-table-cell u-table-cell-28">
+                          2
+                        </td>
+                      </tr>
+                      <tr style="height: 52px">
+                        <td class="u-align-right u-border-1 u-border-palette-5-dark-2 u-table-cell">
+                          دعم فني
+                        </td>
+                        <td class="u-border-1 u-border-palette-5-dark-2 u-table-cell">
+                          <span class="u-file-icon u-icon u-text-palette-1-base"><img src="Layout/images/32282-b6a41c9e.png" alt="" /></span>
+                        </td>
+                      </tr>
+                      <tr style="height: 62px">
+                        <td class="u-align-right u-border-1 u-border-palette-5-dark-2 u-first-column u-table-cell">
+                          الاسعار
+                        </td>
+                        <td class="u-border-1 u-border-palette-5-dark-2 u-table-cell u-table-cell-32">
+                          49$/سنويا
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+                <a onclick="form2()" class="u-align-center u-border-2 u-border-custom-color-1 u-border-hover-custom-color-1 u-btn u-btn-round u-button-style u-hover-custom-color-1 u-hover-feature u-none u-radius u-btn-3">
+                  تعديل</a>
+              </div>
+            </div>
+            <div class="rtl u-form u-form-checks-spacing-0 u-form-2 hidden" id="form2">
+              <form action="/api/dashboard/update-plan" method="post" target="responseFrame" class="u-clearfix u-form-spacing-10  u-inner-form" source="email" name="form" style="padding: 10px;">
+                <input type="text" style="display: none;" name="duration" value="year">
+                <input type="text" style="display: none;" name="name" value="Pro">
+                <div class="u-form-group u-form-name u-form-partition-factor-2 u-label-top">
+                  <label for="name-3793" class="u-label u-label-1">السيرة الذاتية</label>
+                  <input type="text" placeholder="ادخل عدد السيرات الذاتية المتاحة" id="name-3793" value="<%=duration.year[2].features[0].quantity%>" name="resumeQuantity" class="u-border-2 u-border-custom-color-1 u-border-no-left u-border-no-right u-border-no-top u-input u-input-rectangle u-none">
+                </div>
+                <div class="u-form-group u-form-partition-factor-2 u-label-top">
+                  <label for="email-3793" class="u-label u-label-2">خطاب التغطية</label>
+                  <input type="text" placeholder="ادخل عدد خطابات التغطية المتاحة" id="email-3793" value="<%=duration.year[2].features[1].quantity%>" name="coverLetterQuantity" class="u-border-2 u-border-custom-color-1 u-border-no-left u-border-no-right u-border-no-top u-input u-input-rectangle u-none">
+                </div>
+                <div class="u-form-group u-form-partition-factor-2 u-label-top u-form-group-3">
+                  <label for="text-3d8a" class="u-label u-label-3">توقيع البريد الالكتروني</label>
+                  <input type="text" placeholder="ادخل عدد توقيعات الريد الالكتروني" value="<%=duration.year[2].features[4].quantity%>" id="text-3d8a" name="emailSignatureQuantit" class="u-border-2 u-border-custom-color-1 u-border-no-left u-border-no-right u-border-no-top u-input u-input-rectangle u-none">
+                </div>
+                <div class="u-form-group u-form-partition-factor-2 u-label-top u-form-group-4">
+                  <label for="text-1c35" class="u-label u-label-4">انشاء وحجز موقع</label>
+                  <input type="text" placeholder="ادخل عدد انشاءات وحجز موقع متاحه" id="text-1c35" value="<%=duration.year[2].features[3].quantity%>" name="personalWebsiteQuantity" class="u-border-2 u-border-custom-color-1 u-border-no-left u-border-no-right u-border-no-top u-input u-input-rectangle u-none">
+                </div>
+                <div class="u-form-checkbox u-form-group u-form-partition-factor-2 u-label-top u-form-group-5">
+                  <input type="checkbox" id="checkbox-b5cc" name="jobTrackerQuantity" value="1" class="u-field-input" checked="checked">
+                  <label for="checkbox-b5cc" class="u-field-label" style="font-weight: 700; font-size: 1.125rem;">تعقب الوظيفة</label>
+                </div>
+                <div class="u-form-checkbox u-form-group u-form-partition-factor-2 u-label-top u-form-group-6">
+                  <input type="checkbox" id="checkbox-e6ca" name="support" value="<%=duration.year[2].features[2].quantity%>" class="u-field-input" checked="checked">
+                  <label for="checkbox-e6ca" class="u-field-label" style="font-weight: 700; font-size: 1.125rem;">دعم فني</label>
+                </div>
+                <div class="u-form-group u-label-top u-form-group-7">
+                  <label for="text-a438" class="u-label u-label-5">السعر</label>
+                  <input type="text" placeholder="ادخل سعر الاشتراك الحالي" id="text-a438" value="<%=duration.year[2].price%>" name="price" class="u-border-2 u-border-custom-color-1 u-border-no-left u-border-no-right u-border-no-top u-input u-input-rectangle u-none">
+                </div>
+                <div class="u-align-left u-form-group  u-label-top">
+                  <button class=" u-btn-round  u-button-style u-custom-color-1 u-radius u-btn-2">تعديل
+                  </button>
+
+                </div>
+              </form>
+            </div>
+            <div class="u-container-style u-group u-radius u-shape-round u-white u-group-4 hidden" id="details3" data-animation-name="customAnimationIn" data-animation-duration="1000" data-animation-delay="0">
+              <div class="u-container-layout u-container-layout-9">
+                <h4 class="u-text u-text-custom-color-5 u-text-default u-text-9">الباقة البريميم
+                  الشهرية </h4>
+                <div class="rtl u-expanded-width u-table u-table-responsive u-table-3">
+                  <table class="u-table-entity">
+                    <colgroup>
+                      <col width="54.2%">
+                      <col width="45.8%">
+                    </colgroup>
+                    <thead class="u-align-center u-table-header u-white u-table-header-3">
+                      <tr style="height: 51px;">
+                        <th class="u-align-right u-palette-5-dark-3 u-table-cell u-table-cell-33">
+                          التفاصيل</th>
+                        <th class="u-custom-color-5 u-table-cell u-table-cell-34">
+                          <b>بريميم</b>
+                        </th>
+                      </tr>
+                    </thead>
+                    <tbody class="u-align-center u-palette-5-dark-3 u-table-body u-table-body-3">
+                      <tr style="height: 52px;">
+                        <td class="u-align-right u-border-1 u-border-palette-5-dark-2 u-first-column u-table-cell">
+                          سيرة ذاتية</td>
+                        <td class="u-border-1 u-border-palette-5-dark-2 u-table-cell u-table-cell-36">
+                          <%=duration.month[1].features[0].quantity%></td>
+                      </tr>
+                      <tr style="height: 54px;">
+                        <td class="u-align-right u-border-1 u-border-palette-5-dark-2 u-table-cell">
+                          خطاب التغطية</td>
+                        <td class="u-border-2 u-border-no-left u-border-no-right u-border-palette-5-dark-2 u-table-cell u-text-palette-2-base u-table-cell-38">
+                          <%=duration.month[1].features[1].quantity%></td>
+                      </tr>
+                      <tr style="height: 54px;">
+                        <td class="u-align-right u-border-1 u-border-palette-5-dark-2 u-first-column u-table-cell">
+                          تعقب الوظيفة</td>
+                        <td class="u-border-1 u-border-palette-5-dark-2 u-table-cell">
+                          <%if(duration.month[1].features[2].quantity){%>
+                          <span class="u-file-icon u-icon u-text-palette-1-base"><img src="Layout/images/32282-b6a41c9e.png" alt=""></span>
+                          <%}else{%>
+                          <span class="u-file-icon u-icon u-text-white">
+                            <img src="Layout/images/32178-e26c81cc.png" alt=""></span>
+                          <%}%>
+                                                    </td>
+                                                </tr>
+                                                <tr style="height: 52px;">
+                                                    <td
+                                                        class="u-align-right u-border-1 u-border-palette-5-dark-2 u-first-column u-table-cell">
+                                                        توقيع البريد الإلكتروني</td>
+                                                    <td
+                                                        class="u-border-1 u-border-palette-5-dark-2 u-table-cell u-table-cell-42">
+                                                        <%=duration.month[1].features[4].quantity%>
+                        </td>
+                      </tr>
+                      <tr style="height: 52px;">
+                        <td class="u-align-right u-border-1 u-border-palette-5-dark-2 u-table-cell">
+                          انشاء وحجز مواقع</td>
+                        <td class="u-border-1 u-border-palette-5-dark-2 u-table-cell u-table-cell-44">
+                          <%=duration.month[1].features[3].quantity%></td>
+                      </tr>
+                      <tr style="height: 52px;">
+                        <td class="u-align-right u-border-1 u-border-palette-5-dark-2 u-table-cell">
+                          دعم فني </td>
+                        <td class="u-border-1 u-border-palette-5-dark-2 u-table-cell"><span class="u-file-icon u-icon u-text-palette-1-base"><img src="Layout/images/32282-b6a41c9e.png" alt=""></span>
+                        </td>
+                      </tr>
+                      <tr style="height: 62px;">
+                        <td class="u-align-right u-border-1 u-border-palette-5-dark-2 u-first-column u-table-cell">
+                          الاسعار</td>
+                        <td class="u-border-1 u-border-palette-5-dark-2 u-table-cell u-table-cell-48">
+                          <%=duration.month[1].price%>$/شهريا</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+                <a onclick="form3()" class="u-align-center u-border-2 u-border-custom-color-1 u-border-hover-custom-color-1 u-btn u-btn-round u-button-style u-hover-custom-color-1 u-hover-feature u-none u-radius u-btn-5">
+                  تعديل</a>
+              </div>
+            </div>
+            <div class="rtl u-form u-form-checks-spacing-0 u-form-3 hidden" id="form3">
+              <form action="/api/dashboard/update-plan" method="post" target="responseFrame" class="u-clearfix u-form-spacing-10  u-inner-form" source="email" name="form" style="padding: 10px;">
+                <input type="text" style="display: none;" name="duration" value="month">
+                <input type="text" style="display: none;" name="name" value="Premium">
+                <div class="u-form-group u-form-name u-form-partition-factor-2 u-label-top">
+                  <label for="name-3793" class="u-label u-label-1">السيرة الذاتية</label>
+                  <input type="text" placeholder="ادخل عدد السيرات الذاتية المتاحة" id="name-3793" value="<%=duration.month[1].features[0].quantity%>" name="resumeQuantity" class="u-border-2 u-border-custom-color-1 u-border-no-left u-border-no-right u-border-no-top u-input u-input-rectangle u-none">
+                </div>
+                <div class="u-form-group u-form-partition-factor-2 u-label-top">
+                  <label for="email-3793" class="u-label u-label-2">خطاب التغطية</label>
+                  <input type="text" placeholder="ادخل عدد خطابات التغطية المتاحة" id="email-3793" value="<%=duration.month[1].features[1].quantity%>" name="coverLetterQuantity" class="u-border-2 u-border-custom-color-1 u-border-no-left u-border-no-right u-border-no-top u-input u-input-rectangle u-none">
+                </div>
+                <div class="u-form-group u-form-partition-factor-2 u-label-top u-form-group-3">
+                  <label for="text-3d8a" class="u-label u-label-3">توقيع البريد الالكتروني</label>
+                  <input type="text" placeholder="ادخل عدد توقيعات الريد الالكتروني" value="<%=duration.month[1].features[4].quantity%>" id="text-3d8a" name="emailSignatureQuantit" class="u-border-2 u-border-custom-color-1 u-border-no-left u-border-no-right u-border-no-top u-input u-input-rectangle u-none">
+                </div>
+                <div class="u-form-group u-form-partition-factor-2 u-label-top u-form-group-4">
+                  <label for="text-1c35" class="u-label u-label-4">انشاء وحجز موقع</label>
+                  <input type="text" placeholder="ادخل عدد انشاءات وحجز موقع متاحه" id="text-1c35" value="<%=duration.month[1].features[3].quantity%>" name="personalWebsiteQuantity" class="u-border-2 u-border-custom-color-1 u-border-no-left u-border-no-right u-border-no-top u-input u-input-rectangle u-none">
+                </div>
+                <div class="u-form-checkbox u-form-group u-form-partition-factor-2 u-label-top u-form-group-5">
+                  <input type="checkbox" id="checkbox-b5cc" name="jobTrackerQuantity" value="1" class="u-field-input" checked="checked">
+                  <label for="checkbox-b5cc" class="u-field-label" style="font-weight: 700; font-size: 1.125rem;">تعقب الوظيفة</label>
+                </div>
+                <div class="u-form-checkbox u-form-group u-form-partition-factor-2 u-label-top u-form-group-6">
+                  <input type="checkbox" id="checkbox-e6ca" name="support" value="<%=duration.month[1].features[2].quantity%>" class="u-field-input" checked="checked">
+                  <label for="checkbox-e6ca" class="u-field-label" style="font-weight: 700; font-size: 1.125rem;">دعم فني</label>
+                </div>
+                <div class="u-form-group u-label-top u-form-group-7">
+                  <label for="text-a438" class="u-label u-label-5">السعر</label>
+                  <input type="text" placeholder="ادخل سعر الاشتراك الحالي" id="text-a438" value="<%=duration.month[1].price%>" name="price" class="u-border-2 u-border-custom-color-1 u-border-no-left u-border-no-right u-border-no-top u-input u-input-rectangle u-none">
+                </div>
+                <div class="u-align-left u-form-group  u-label-top">
+                  <button class=" u-btn-round  u-button-style u-custom-color-1 u-radius u-btn-2">تعديل
+                  </button>
+
+                </div>
+              </form>
+            </div>
+            <div class="u-container-style u-group u-radius u-shape-round u-white u-group-5 hidden" id="details4" data-animation-name="customAnimationIn" data-animation-duration="1000" data-animation-delay="0">
+              <div class="u-container-layout u-container-layout-10">
+                <h4 class="u-text u-text-custom-color-6 u-text-default u-text-10">الباقة البريميم
+                  السنوية </h4>
+                <div class="rtl u-expanded-width u-table u-table-responsive u-table-4">
+                  <table class="u-table-entity">
+                    <colgroup>
+                      <col width="54.2%">
+                      <col width="45.8%">
+                    </colgroup>
+                    <thead class="u-align-center u-table-header u-white u-table-header-4">
+                      <tr style="height: 51px;">
+                        <th class="u-align-right u-palette-5-dark-3 u-table-cell u-table-cell-49">
+                          التفاصيل</th>
+                        <th class="u-custom-color-6 u-table-cell u-table-cell-50">
+                          <b>بريميم</b>
+                        </th>
+                      </tr>
+                    </thead>
+                    <tbody class="u-align-center u-palette-5-dark-3 u-table-body u-table-body-4">
+                      <tr style="height: 52px;">
+                        <td class="u-align-right u-border-1 u-border-palette-5-dark-2 u-first-column u-table-cell">
+                          سيرة ذاتية</td>
+                        <td class="u-border-1 u-border-palette-5-dark-2 u-table-cell u-table-cell-52">
+                          <%=duration.year[1].features[0].quantity%></td>
+                      </tr>
+                      <tr style="height: 54px;">
+                        <td class="u-align-right u-border-1 u-border-palette-5-dark-2 u-table-cell">
+                          خطاب التغطية</td>
+                        <td class="u-border-2 u-border-no-left u-border-no-right u-border-palette-5-dark-2 u-table-cell u-text-palette-2-base u-table-cell-54">
+                          <%=duration.year[1].features[1].quantity%></td>
+                      </tr>
+                      <tr style="height: 54px;">
+                        <td class="u-align-right u-border-1 u-border-palette-5-dark-2 u-first-column u-table-cell">
+                          تعقب الوظيفة</td>
+                        <td class="u-border-1 u-border-palette-5-dark-2 u-table-cell">
+                          <%if(duration.year[1].features[2].quantity){%>
+                          <span class="u-file-icon u-icon u-text-palette-1-base"><img src="Layout/images/32282-b6a41c9e.png" alt=""></span>
+                          <%}else{%>
+                          <span class="u-file-icon u-icon u-text-white">
+                            <img src="Layout/images/32178-e26c81cc.png" alt=""></span>
+                          <%}%>
+                                                    </td>
+                                                </tr>
+                                                <tr style="height: 52px;">
+                                                    <td
+                                                        class="u-align-right u-border-1 u-border-palette-5-dark-2 u-first-column u-table-cell">
+                                                        توقيع البريد الإلكتروني</td>
+                                                    <td
+                                                        class="u-border-1 u-border-palette-5-dark-2 u-table-cell u-table-cell-58">
+                                                        <%=duration.year[1].features[4].quantity%>
+                        </td>
+                      </tr>
+                      <tr style="height: 52px;">
+                        <td class="u-align-right u-border-1 u-border-palette-5-dark-2 u-table-cell">
+                          انشاء وحجز مواقع</td>
+                        <td class="u-border-1 u-border-palette-5-dark-2 u-table-cell u-table-cell-60">
+                          <%=duration.year[1].features[3].quantity%></td>
+                      </tr>
+                      <tr style="height: 52px;">
+                        <td class="u-align-right u-border-1 u-border-palette-5-dark-2 u-table-cell">
+                          دعم فني </td>
+                        <td class="u-border-1 u-border-palette-5-dark-2 u-table-cell"><span class="u-file-icon u-icon u-text-palette-1-base"><img src="Layout/images/32282-b6a41c9e.png" alt=""></span>
+                        </td>
+                      </tr>
+                      <tr style="height: 62px;">
+                        <td class="u-align-right u-border-1 u-border-palette-5-dark-2 u-first-column u-table-cell">
+                          الاسعار</td>
+                        <td class="u-border-1 u-border-palette-5-dark-2 u-table-cell u-table-cell-64">
+                          <%=duration.year[1].price%>$/سنويا</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+                <a onclick="form4()" class="u-align-center u-border-2 u-border-custom-color-1 u-border-hover-custom-color-1 u-btn u-btn-round u-button-style u-hover-custom-color-1 u-hover-feature u-none u-radius u-btn-7">
+                  تعديل</a>
+              </div>
+            </div>
+            <div class="rtl u-form u-form-checks-spacing-0 u-form-4 hidden" id="form4">
+              <form action="/api/dashboard/update-plan" method="post" target="responseFrame" class="u-clearfix u-form-spacing-10  u-inner-form" source="email" name="form" style="padding: 10px;">
+                <input type="text" style="display: none;" name="duration" value="year">
+                <input type="text" style="display: none;" name="name" value="Premium">
+                <div class="u-form-group u-form-name u-form-partition-factor-2 u-label-top">
+                  <label for="name-3793" class="u-label u-label-1">السيرة الذاتية</label>
+                  <input type="text" placeholder="ادخل عدد السيرات الذاتية المتاحة" id="name-3793" value="<%=duration.year[1].features[0].quantity%>" name="resumeQuantity" class="u-border-2 u-border-custom-color-1 u-border-no-left u-border-no-right u-border-no-top u-input u-input-rectangle u-none">
+                </div>
+                <div class="u-form-group u-form-partition-factor-2 u-label-top">
+                  <label for="email-3793" class="u-label u-label-2">خطاب التغطية</label>
+                  <input type="text" placeholder="ادخل عدد خطابات التغطية المتاحة" id="email-3793" value="<%=duration.year[1].features[1].quantity%>" name="coverLetterQuantity" class="u-border-2 u-border-custom-color-1 u-border-no-left u-border-no-right u-border-no-top u-input u-input-rectangle u-none">
+                </div>
+                <div class="u-form-group u-form-partition-factor-2 u-label-top u-form-group-3">
+                  <label for="text-3d8a" class="u-label u-label-3">توقيع البريد الالكتروني</label>
+                  <input type="text" placeholder="ادخل عدد توقيعات الريد الالكتروني" value="<%=duration.year[1].features[4].quantity%>" id="text-3d8a" name="emailSignatureQuantit" class="u-border-2 u-border-custom-color-1 u-border-no-left u-border-no-right u-border-no-top u-input u-input-rectangle u-none">
+                </div>
+                <div class="u-form-group u-form-partition-factor-2 u-label-top u-form-group-4">
+                  <label for="text-1c35" class="u-label u-label-4">انشاء وحجز موقع</label>
+                  <input type="text" placeholder="ادخل عدد انشاءات وحجز موقع متاحه" id="text-1c35" value="<%=duration.year[1].features[3].quantity%>" name="personalWebsiteQuantity" class="u-border-2 u-border-custom-color-1 u-border-no-left u-border-no-right u-border-no-top u-input u-input-rectangle u-none">
+                </div>
+                <div class="u-form-checkbox u-form-group u-form-partition-factor-2 u-label-top u-form-group-5">
+                  <input type="checkbox" id="checkbox-b5cc" name="jobTrackerQuantity" value="1" class="u-field-input" checked="checked">
+                  <label for="checkbox-b5cc" class="u-field-label" style="font-weight: 700; font-size: 1.125rem;">تعقب الوظيفة</label>
+                </div>
+                <div class="u-form-checkbox u-form-group u-form-partition-factor-2 u-label-top u-form-group-6">
+                  <input type="checkbox" id="checkbox-e6ca" name="support" value="<%=duration.year[1].features[2].quantity%>" class="u-field-input" checked="checked">
+                  <label for="checkbox-e6ca" class="u-field-label" style="font-weight: 700; font-size: 1.125rem;">دعم فني</label>
+                </div>
+                <div class="u-form-group u-label-top u-form-group-7">
+                  <label for="text-a438" class="u-label u-label-5">السعر</label>
+                  <input type="text" placeholder="ادخل سعر الاشتراك الحالي" id="text-a438" value="<%=duration.year[1].price%>" name="price" class="u-border-2 u-border-custom-color-1 u-border-no-left u-border-no-right u-border-no-top u-input u-input-rectangle u-none">
+                </div>
+                <div class="u-align-left u-form-group  u-label-top">
+                  <button class=" u-btn-round  u-button-style u-custom-color-1 u-radius u-btn-2">تعديل
+                  </button>
+
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+        <div class="u-container-style u-gradient u-layout-cell u-radius u-shape-round u-size-11-lg u-size-11-xl u-size-11-xxl u-size-13-md u-size-13-sm u-size-13-xs u-layout-cell-2">
+          <div class="u-container-layout u-container-layout-11">
+            <div class="u-expanded-width u-list u-list-2">
+              <div class="u-repeater u-repeater-2">
+                <div onclick="toggleSection(1)" style="cursor: pointer;" class="u-container-align-right u-container-style u-custom-item u-hover-feature u-list-item u-radius u-repeater-item u-shape-round u-list-item-5">
+                  <div class="u-container-layout u-similar-container u-container-layout-12">
+                    <h6 class="u-align-right u-text u-text-body-alt-color u-text-default u-text-11">
+                      لوحة التحكم&nbsp;<span class="u-file-icon u-icon u-text-white u-icon-9"><img src="Layout/images/4725672-bf8ca48a.png" alt=""></span>
+                    </h6>
+                  </div>
+                </div>
+                <div onclick="toggleSection(2)" style="cursor: pointer;" class="u-container-align-right u-container-style u-custom-color-3 u-custom-item u-hover-feature u-list-item u-radius u-repeater-item u-shape-round u-list-item-6">
+                  <div class="u-container-layout u-similar-container u-container-layout-13">
+                    <h6 class="u-align-right u-text u-text-body-alt-color u-text-default u-text-12">
+                      الباقات​&nbsp;<span class="u-file-icon u-icon u-text-white u-icon-10"><img src="Layout/images/879757-c80d89ad.png" alt=""></span>
+                    </h6>
+                  </div>
+                </div>
+                <div onclick="toggleSection(3)" style="cursor: pointer;" class="u-container-align-right u-container-style u-custom-item u-hover-feature u-list-item u-radius u-repeater-item u-shape-round u-list-item-7">
+                  <div class="u-container-layout u-similar-container u-container-layout-14">
+                    <h6 class="u-align-right u-text u-text-body-alt-color u-text-default u-text-13">
+                      العملاء&nbsp;<span class="u-file-icon u-icon u-text-white u-icon-11"><img src="Layout/images/3126647-37e670d1.png" alt=""></span>
+                    </h6>
+                  </div>
+                </div>
+                <div onclick="toggleSection(4)" style="cursor: pointer;" class="u-container-align-right u-container-style u-custom-item u-hover-feature u-list-item u-radius u-repeater-item u-shape-round u-list-item-8">
+                  <div class="u-container-layout u-similar-container u-container-layout-15">
+                    <h6 class="u-align-right u-text u-text-body-alt-color u-text-default u-text-14">
+                      القوالب​&nbsp;<span class="u-file-icon u-icon u-text-white u-icon-12"><img src="Layout/images/2611701-5bf827d3.png" alt=""></span>
+                    </h6>
+                  </div>
+                </div>
+                <div onclick="toggleSection(5)" style="cursor: pointer;" class="u-container-align-right u-container-style u-custom-item u-hover-feature u-list-item u-radius u-repeater-item u-shape-round u-list-item-9">
+                  <div class="u-container-layout u-similar-container u-container-layout-16">
+                    <h6 class="u-align-right u-text u-text-body-alt-color u-text-default u-text-15">
+                      الصفحات​&nbsp;<span class="u-file-icon u-icon u-text-white u-icon-13"><img src="Layout/images/3650317-11f1865c.png" alt=""></span>
+                    </h6>
+                  </div>
+                </div>
+                <div onclick="toggleSection(6)" style="cursor: pointer;" class="u-container-align-right u-container-style u-custom-item u-hover-feature u-list-item u-radius u-repeater-item u-shape-round u-list-item-10">
+                  <div class="u-container-layout u-similar-container u-container-layout-17">
+                    <h6 class="u-align-right u-text u-text-body-alt-color u-text-default u-text-16">
+                      الاعدادات​&nbsp;<span class="u-file-icon u-icon u-text-white u-icon-14"><img src="Layout/images/2040504-4c26496e.png" alt=""></span>
+                    </h6>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <a href="#" class="u-align-center-lg u-align-center-md u-align-center-sm u-align-center-xl u-align-center-xxl u-align-left-xs u-border-2 u-border-hover-custom-color-3 u-border-white u-btn u-btn-round u-button-style u-hover-custom-color-3 u-hover-feature u-none u-radius u-btn-9">الصفحة
+              الرئيسية </a>
+            <a href="#" class="u-align-center u-border-2 u-border-hover-custom-color-3 u-border-white u-btn u-btn-round u-button-style u-hover-custom-color-3 u-hover-feature u-none u-radius u-btn-10">تواصل
+              مع المطور </a>
+          </div>
+        </div>
+      </div>
+    </div>
+    </div>
+
+
+
+
+
+  </section>
+  <section class="u-clearfix u-valign-middle-lg u-valign-middle-md u-valign-middle-sm u-valign-middle-xl u-valign-middle-xs u-section-3 hidden" id="section3">
+    <div class="data-layout-selected padding u-clearfix u-expanded-width u-gutter-20 u-layout-wrap u-layout-wrap-1">
+      <div class="u-layout">
+        <div class="u-layout-row">
+          <div class="u-container-style u-layout-cell u-size-47-md u-size-47-sm u-size-47-xs u-size-49-lg u-size-49-xl u-size-49-xxl u-layout-cell-1">
+            <div class="u-container-layout u-container-layout-1">
+              <div class="u-container-style u-expanded-width u-group u-white u-group-1">
+                <div class="u-container-layout u-container-layout-2">
+                  <%if(user){%>
+                  <%if(user){%>
+                  <% if(user.googleId) { %>
+                  <img class="u-image u-image-circle u-image-1" src="<%= user.avatar %>" alt="<%=user.name%>" data-image-width="1280" data-image-height="853">
+                  <% } else if(!user.googleId) { %>
+                  <img class="u-image u-image-circle u-image-1" src="/img/users/<%= user.avatar %>" alt="<%=user.name%>" data-image-width="1280" data-image-height="853">
+                  <% } %>
+                  <%}%>
+
+                                    <h5 class="u-align-right u-text u-text-default u-text-1" id="current-admin" data-admin-id="<%=user._id%>"><%=user.name%><br>
+                  <span style="font-weight: 400;">مسؤول الموقع</span>
+                  </h5>
+                  <h5 class="u-align-right u-text u-text-default u-text-palette-5-dark-1 u-text-2">
+                    العملاء</h5>
+                  <%}%>
+                                </div>
+                            </div>
+                            <div class="padding-rtl u-expanded-width u-list u-list-1">
+                                <div class="u-repeater u-repeater-1">
+                                    <div
+                                            class="u-container-style u-hover-feature u-list-item u-radius u-repeater-item u-shape-round u-white u-list-item-1">
+                                        <div class="u-container-layout u-similar-container u-container-layout-3"><span
+                                                    class="u-custom-color-3 u-file-icon u-icon u-icon-rounded u-radius u-text-white u-icon-1"
+                                                    data-animation-name="customAnimationIn"
+                                                    data-animation-duration="1000"><img
+                                                        src="Layout/images/3126647-37e670d1.png" alt=""></span>
+                                            <h5
+                                                    class="u-align-right u-text u-text-custom-color-7 u-text-default u-text-3">
+                                                العملاء </h5>
+                                            <h4 class="u-align-right u-text u-text-palette-5-dark-2 u-text-4"
+                                                data-animation-name="counter" data-animation-event="scroll"
+                                                data-animation-duration="2000"><%=usersCount%> </h4>
+                  <h6 class="u-align-right u-text u-text-custom-color-7 u-text-5">
+                    <span class="u-text-custom-color-5">55%</span> عن الاسبوع الماضي
+                  </h6>
+                </div>
+              </div>
+              <div class="u-container-style u-hover-feature u-list-item u-radius u-repeater-item u-shape-round u-white u-list-item-2">
+                <div class="u-container-layout u-similar-container u-container-layout-4"><span class="u-custom-color-7 u-file-icon u-icon u-icon-rounded u-radius u-text-white u-icon-2" data-animation-name="customAnimationIn" data-animation-duration="1000"><img src="Layout/images/879859-1167d44c.png" alt=""></span>
+                  <h5 class="u-align-right u-text u-text-custom-color-7 u-text-default u-text-6">
+                    المبيعات</h5>
+                  <h4 class="u-align-right u-text u-text-palette-5-dark-2 u-text-7" data-animation-name="counter" data-animation-event="scroll" data-animation-duration="2000">$<%=totalSales%></h4>
+                  <h6 class="u-align-right u-text u-text-custom-color-7 u-text-8">
+                    <span class="u-text-custom-color-5">10%</span> عن الاسبوع الماضي
+                  </h6>
+                </div>
+              </div>
+              <div class="u-container-style u-hover-feature u-list-item u-radius u-repeater-item u-shape-round u-white u-list-item-3">
+                <div class="u-container-layout u-similar-container u-container-layout-5"><span class="u-custom-color-5 u-file-icon u-icon u-icon-rounded u-radius u-text-white u-icon-3" data-animation-name="customAnimationIn" data-animation-duration="1000"><img src="Layout/images/2583118-a805875b.png" alt=""></span>
+                  <h5 class="u-align-right u-text u-text-custom-color-7 u-text-default u-text-9">
+                    الاشراكات</h5>
+                  <h4 class="u-align-right u-text u-text-palette-5-dark-2 u-text-10" data-animation-name="counter" data-animation-event="scroll" data-animation-duration="2000"><%=countUser%></h4>
+                  <h6 class="u-align-right u-text u-text-custom-color-7 u-text-11">
+                    <span class="u-text-custom-color-8">2% </span>عن الاسبوع الماضي
+                  </h6>
+                </div>
+              </div>
+              <div class="u-container-style u-hover-feature u-list-item u-radius u-repeater-item u-shape-round u-white u-list-item-4">
+                <div class="u-container-layout u-similar-container u-container-layout-6"><span class="u-custom-color-6 u-file-icon u-icon u-icon-rounded u-radius u-text-white u-icon-4" data-animation-name="customAnimationIn" data-animation-duration="500" data-animation-delay="0"><img src="Layout/images/2611558-3e4ab628.png" alt=""></span>
+                  <h5 class="u-align-right u-text u-text-custom-color-7 u-text-default u-text-12">
+                    القوالب</h5>
+                  <h4 class="u-align-right u-text u-text-palette-5-dark-2 u-text-13" data-animation-name="counter" data-animation-event="scroll" data-animation-duration="2000"><%=countTemplates%></h4>
+                  <h6 class="u-align-right u-text u-text-custom-color-7 u-text-14">0% عن
+                    الاسبوع الماضي</h6>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="u-container-style u-expanded-width-lg u-expanded-width-md u-expanded-width-sm u-expanded-width-xl u-expanded-width-xs u-group u-hover-feature u-radius u-shape-round u-white u-group-2" data-animation-name="customAnimationIn" data-animation-duration="1000" data-animation-delay="0">
+            <div class="u-container-layout u-container-layout-7">
+              <h4 class="u-align-right u-text u-text-custom-color-7 u-text-default u-text-15">
+                العملاء</h4>
+              <div class="rtl u-form u-form-1">
+                <div class="u-form-email u-form-group u-label-none">
+                  <label for="email-f458" class="u-label">Email</label>
+                  <input type="text" placeholder="ابحث عن العميل المطلوب" id="search-input" name="search" class="u-input u-input-rectangle u-radius u-input-1" required="required">
+                </div>
+                <div class="u-align-left u-form-group u-form-submit u-label-none">
+                  <a href="#" class="u-btn u-btn-submit u-button-style u-btn-1"></a>
+                  <input type="submit" value="submit" class="u-form-control-hidden">
+                </div>
+              </div>
+              <p class="u-align-right u-small-text u-text u-text-default u-text-palette-5-dark-1 u-text-variant u-text-16">
+                تفاصيل الاشتراكات وباقات العملاء</p>
+              <div class="u-expanded-width u-table u-table-responsive u-table-1">
+                <table class="u-table-entity">
+                  <colgroup>
+                    <col width="25%">
+                    <col width="25%">
+                    <col width="25%">
+                    <col width="25%">
+                  </colgroup>
+                  <thead class="u-align-right u-table-header u-text-palette-5-dark-1 u-table-header-1">
+                    <tr style="height: 47px;">
+                      <th class="u-align-center u-table-cell">الحاله</th>
+                      <th class="u-align-center u-table-cell">المدفوع حتي الأن</th>
+                      <th class="u-align-center u-table-cell">الباقة</th>
+                      <th class="u-table-cell">العميل</th>
+                    </tr>
+                  </thead>
+                  <tbody id="user-list" class="u-align-right u-table-body u-text-palette-5-dark-2 u-table-body-1">
+                  </tbody>
+                </table>
+              </div>
+              <!-- Mostafa -->
+              <!-- <a href="#" class="u-align-center u-border-0 u-btn u-button-style u-hover-feature u-hover-white u-white u-btn-2"><span class="u-icon u-icon-5"><svg class="u-svg-content" viewBox="0 0 30.727 30.727" x="0px" y="0px" style="width: 1em; height: 1em;">
+                    <path d="M29.994,10.183L15.363,24.812L0.733,10.184c-0.977-0.978-0.977-2.561,0-3.536c0.977-0.977,2.559-0.976,3.536,0   l11.095,11.093L26.461,6.647c0.977-0.976,2.559-0.976,3.535,0C30.971,7.624,30.971,9.206,29.994,10.183z">
+                    </path>
+                  </svg></span>&nbsp;المزيد
+              </a> -->
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="u-container-style u-gradient u-layout-cell u-radius u-shape-round u-size-11-lg u-size-11-xl u-size-11-xxl u-size-13-md u-size-13-sm u-size-13-xs u-layout-cell-2">
+        <div class="u-container-layout u-container-layout-8">
+          <div class="u-expanded-width u-list u-list-2">
+            <div class="u-repeater u-repeater-2">
+              <div onclick="toggleSection(1)" style="cursor: pointer" class="u-container-align-right u-container-style u-custom-item u-hover-feature u-list-item u-radius u-repeater-item u-shape-rectangle u-list-item-5">
+                <div class="u-container-layout u-similar-container u-container-layout-9">
+                  <h6 class="u-align-right u-text u-text-body-alt-color u-text-default u-text-17">
+                    لوحة التحكم&nbsp;<span class="u-file-icon u-icon u-text-white u-icon-6"><img src="Layout/images/4725672-bf8ca48a.png" alt="" /></span>
+                  </h6>
+                </div>
+              </div>
+              <div onclick="toggleSection(2)" style="cursor: pointer" class="u-container-align-right u-container-style u-custom-item u-hover-feature u-list-item u-radius u-repeater-item u-shape-round u-list-item-6">
+                <div class="u-container-layout u-similar-container u-container-layout-10">
+                  <h6 class="u-align-right u-text u-text-body-alt-color u-text-default u-text-18">
+                    الباقات​&nbsp;<span class="u-file-icon u-icon u-text-white u-icon-7"><img src="Layout/images/879757-c80d89ad.png" alt="" /></span>
+                  </h6>
+                </div>
+              </div>
+              <div onclick="toggleSection(3)" style="cursor: pointer" class="u-container-align-right u-container-style u-custom-color-3 u-custom-item u-list-item u-radius u-repeater-item u-shape-round u-list-item-7">
+                <div class="u-container-layout u-similar-container u-container-layout-11">
+                  <h6 class="u-align-right u-text u-text-body-alt-color u-text-default u-text-19">
+                    العملاء&nbsp;<span class="u-file-icon u-icon u-text-white u-icon-8"><img src="Layout/images/3126647-37e670d1.png" alt="" /></span>
+                  </h6>
+                </div>
+              </div>
+              <div onclick="toggleSection(4)" style="cursor: pointer" class="u-container-align-right u-container-style u-custom-item u-hover-feature u-list-item u-radius u-repeater-item u-shape-round u-list-item-8">
+                <div class="u-container-layout u-similar-container u-container-layout-12">
+                  <h6 class="u-align-right u-text u-text-body-alt-color u-text-default u-text-20">
+                    القوالب​&nbsp;<span class="u-file-icon u-icon u-text-white u-icon-9"><img src="Layout/images/2611701-5bf827d3.png" alt="" /></span>
+                  </h6>
+                </div>
+              </div>
+              <div onclick="toggleSection(5)" style="cursor: pointer" class="u-container-align-right u-container-style u-custom-item u-hover-feature u-list-item u-radius u-repeater-item u-shape-round u-list-item-9">
+                <div class="u-container-layout u-similar-container u-container-layout-13">
+                  <h6 class="u-align-right u-text u-text-body-alt-color u-text-default u-text-21">
+                    الصفحات​&nbsp;<span class="u-file-icon u-icon u-text-white u-icon-10"><img src="Layout/images/3650317-11f1865c.png" alt="" /></span>
+                  </h6>
+                </div>
+              </div>
+              <div onclick="toggleSection(6)" style="cursor: pointer" class="u-container-align-right u-container-style u-custom-item u-hover-feature u-list-item u-radius u-repeater-item u-shape-round u-list-item-10">
+                <div class="u-container-layout u-similar-container u-container-layout-14">
+                  <h6 class="u-align-right u-text u-text-body-alt-color u-text-default u-text-22">
+                    باركود​&nbsp;<span class="u-file-icon u-icon u-text-white u-icon-11"><img src="Layout/images/3867237-82c8a9c1.png" alt="" /></span>
+                  </h6>
+                </div>
+              </div>
+            </div>
+          </div>
+          <a href="#" class="u-align-center u-border-2 u-border-hover-custom-color-3 u-border-white u-btn u-btn-round u-button-style u-hover-custom-color-3 u-hover-feature u-none u-radius u-btn-3">الصفحة الرئيسية
+          </a>
+          <a href="#" class="u-align-center u-border-2 u-border-hover-custom-color-3 u-border-white u-btn u-btn-round u-button-style u-hover-custom-color-3 u-hover-feature u-none u-radius u-btn-4">تواصل مع المطور
+          </a>
+        </div>
+      </div>
+    </div>
+    </div>
+    </div>
+
+
+
+
+
+  </section>
+  <section class="u-clearfix u-valign-middle-lg u-valign-middle-md u-valign-middle-sm u-valign-middle-xl u-valign-middle-xs u-section-4 hidden" id="section4">
+    <div class="data-layout-selected padding u-clearfix u-expanded-width u-gutter-20 u-layout-wrap u-layout-wrap-1">
+      <div class="u-layout">
+        <div class="u-layout-row">
+          <div class="u-container-style u-layout-cell u-size-47-md u-size-47-sm u-size-47-xs u-size-49-lg u-size-49-xl u-size-49-xxl u-layout-cell-1">
+            <div class="u-container-layout u-container-layout-1">
+              <div class="u-container-style u-expanded-width u-group u-white u-group-1">
+                <div class="u-container-layout u-container-layout-2">
+                  <%if(user){%>
+                  <%if(user){%>
+                  <% if(user.googleId) { %>
+                  <img class="u-image u-image-circle u-image-1" src="<%= user.avatar %>" alt="<%=user.name%>" data-image-width="1280" data-image-height="853">
+                  <% } else if(!user.googleId) { %>
+                  <img class="u-image u-image-circle u-image-1" src="/img/users/<%= user.avatar %>" alt="<%=user.name%>" data-image-width="1280" data-image-height="853">
+                  <% } %>
+                  <%}%>
+
+                                    <h5 class="u-align-right u-text u-text-default u-text-1"><%=user.name%><br>
+                  <span style="font-weight: 400;">مسؤول الموقع</span>
+                  </h5>
+                  <h5 class="u-align-right u-text u-text-default u-text-palette-5-dark-1 u-text-2">
+                    القوالب</h5>
+                  <%}%>
+                                </div>
+                            </div>
+                            <div class="padding-rtl u-expanded-width u-list u-list-1">
+                                <div class="u-repeater u-repeater-1">
+                                    <div
+                                            class="u-container-style u-hover-feature u-list-item u-radius u-repeater-item u-shape-round u-white u-list-item-1">
+                                        <div class="u-container-layout u-similar-container u-container-layout-3"><span
+                                                    class="u-custom-color-3 u-file-icon u-icon u-icon-rounded u-radius u-text-white u-icon-1"
+                                                    data-animation-name="customAnimationIn"
+                                                    data-animation-duration="1000"><img
+                                                        src="Layout/images/3126647-37e670d1.png" alt=""></span>
+                                            <h5
+                                                    class="u-align-right u-text u-text-custom-color-7 u-text-default u-text-3">
+                                                العملاء </h5>
+                                            <h4 class="u-align-right u-text u-text-palette-5-dark-2 u-text-4"
+                                                data-animation-name="counter" data-animation-event="scroll"
+                                                data-animation-duration="2000"><%=usersCount%> </h4>
+                  <h6 class="u-align-right u-text u-text-custom-color-7 u-text-5">
+                    <span class="u-text-custom-color-5">55%</span> عن الاسبوع الماضي
+                  </h6>
+                </div>
+              </div>
+              <div class="u-container-style u-hover-feature u-list-item u-radius u-repeater-item u-shape-round u-white u-list-item-2">
+                <div class="u-container-layout u-similar-container u-container-layout-4"><span class="u-custom-color-7 u-file-icon u-icon u-icon-rounded u-radius u-text-white u-icon-2" data-animation-name="customAnimationIn" data-animation-duration="1000"><img src="Layout/images/879859-1167d44c.png" alt=""></span>
+                  <h5 class="u-align-right u-text u-text-custom-color-7 u-text-default u-text-6">
+                    المبيعات</h5>
+                  <h4 class="u-align-right u-text u-text-palette-5-dark-2 u-text-7" data-animation-name="counter" data-animation-event="scroll" data-animation-duration="2000">$<%=totalSales%></h4>
+                  <h6 class="u-align-right u-text u-text-custom-color-7 u-text-8">
+                    <span class="u-text-custom-color-5">10%</span> عن الاسبوع الماضي
+                  </h6>
+                </div>
+              </div>
+              <div class="u-container-style u-hover-feature u-list-item u-radius u-repeater-item u-shape-round u-white u-list-item-3">
+                <div class="u-container-layout u-similar-container u-container-layout-5"><span class="u-custom-color-5 u-file-icon u-icon u-icon-rounded u-radius u-text-white u-icon-3" data-animation-name="customAnimationIn" data-animation-duration="1000"><img src="Layout/images/2583118-a805875b.png" alt=""></span>
+                  <h5 class="u-align-right u-text u-text-custom-color-7 u-text-default u-text-9">
+                    الاشراكات</h5>
+                  <h4 class="u-align-right u-text u-text-palette-5-dark-2 u-text-10" data-animation-name="counter" data-animation-event="scroll" data-animation-duration="2000"><%=countUser%></h4>
+                  <h6 class="u-align-right u-text u-text-custom-color-7 u-text-11">
+                    <span class="u-text-custom-color-8">2% </span>عن الاسبوع الماضي
+                  </h6>
+                </div>
+              </div>
+              <div class="u-container-style u-hover-feature u-list-item u-radius u-repeater-item u-shape-round u-white u-list-item-4">
+                <div class="u-container-layout u-similar-container u-container-layout-6"><span class="u-custom-color-6 u-file-icon u-icon u-icon-rounded u-radius u-text-white u-icon-4" data-animation-name="customAnimationIn" data-animation-duration="500" data-animation-delay="0"><img src="Layout/images/2611558-3e4ab628.png" alt=""></span>
+                  <h5 class="u-align-right u-text u-text-custom-color-7 u-text-default u-text-12">
+                    القوالب</h5>
+                  <h4 class="u-align-right u-text u-text-palette-5-dark-2 u-text-13" data-animation-name="counter" data-animation-event="scroll" data-animation-duration="2000"><%=countTemplates%></h4>
+                  <h6 class="u-align-right u-text u-text-custom-color-7 u-text-14">0% عن
+                    الاسبوع الماضي</h6>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="u-container-style u-expanded-width-lg u-expanded-width-md u-expanded-width-sm u-expanded-width-xl u-expanded-width-xs u-group u-hover-feature u-radius u-shape-round u-white u-group-2" data-animation-name="customAnimationIn" data-animation-duration="1000" data-animation-delay="0">
+            <div class="u-container-layout u-container-layout-7">
+              <h4 class="u-align-right u-text u-text-custom-color-7 u-text-default u-text-15">
+                القوالب</h4>
+              <p class="u-align-right u-small-text u-text u-text-default u-text-palette-5-dark-1 u-text-variant u-text-16">
+                تفاصيل القوالب والعدد</p>
+              <div class="u-expanded-width u-table u-table-responsive u-table-1">
+                <table class="u-table-entity">
+                  <colgroup>
+                    <col width="25%">
+                    <col width="25%">
+                    <col width="25%">
+                    <col width="25%">
+                  </colgroup>
+                  <thead class="u-align-right u-table-header u-text-palette-5-dark-1 u-table-header-1">
+                    <tr style="height: 47px;">
+                      <th class="u-align-center u-table-cell">المستخدم</th>
+                      <th class="u-align-center u-table-cell">القوالب الفردية</th>
+                      <th class="u-align-center u-table-cell">العدد</th>
+                      <th class="u-table-cell">القوالب</th>
+                    </tr>
+                  </thead>
+                  <tbody class="u-align-right u-table-body u-text-palette-5-dark-2 u-table-body-1">
+                    <tr style="height: 61px;">
+                      <td class="u-align-center u-table-cell u-table-cell-5"><%=usersCountByTemplateType.resume%></td>
+                      <td class="u-align-center u-table-cell u-table-cell-6">-</td>
+                      <td class="u-align-center u-table-cell u-table-cell-7"><%=allCountsType["resume"]%></td>
+                      <td class="u-table-cell u-table-cell-8">قوالب السيرة الذاتية</td>
+                    </tr>
+                    <tr style="height: 61px;">
+                      <td class="u-align-center u-table-cell u-table-cell-5"><%=usersCountByTemplateType.coverLetter%></td>
+                      <td class="u-align-center u-table-cell u-table-cell-6">-</td>
+                      <td class="u-align-center u-table-cell u-table-cell-7"><%=allCountsType["cover letter"]%></td>
+                      <td class="u-table-cell">قوالب خطاب الغلاف</td>
+                    </tr>
+                    <tr style="height: 61px;">
+                      <td class="u-align-center u-table-cell u-table-cell-5"><%=usersCountByTemplateType.emailSignature%></td>
+                      <td class="u-align-center u-table-cell u-table-cell-6">-</td>
+                      <td class="u-align-center u-table-cell u-table-cell-7"><%=allCountsType["email signature"]%></td>
+                      <td class="u-table-cell">قوالب البريد الالكتروني</td>
+                    </tr>
+                    <tr style="height: 61px;">
+                      <td class="u-align-center u-table-cell u-table-cell-5"><%=usersCountByTemplateType.personalWebsite%></td>
+                      <td class="u-align-center u-table-cell u-table-cell-6">-</td>
+                      <td class="u-align-center u-table-cell u-table-cell-7"><%=allCountsType["personal website"]%></td>
+                      <td class="u-table-cell">قوالب صفحات الويب</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="u-container-style u-gradient u-layout-cell u-radius u-shape-round u-size-11-lg u-size-11-xl u-size-11-xxl u-size-13-md u-size-13-sm u-size-13-xs u-layout-cell-2">
+        <div class="u-container-layout u-container-layout-8">
+          <div class="u-expanded-width u-list u-list-2">
+            <div class="u-repeater u-repeater-2">
+              <div class="u-container-align-right u-container-style u-custom-item u-hover-feature u-list-item u-radius u-repeater-item u-shape-rectangle u-list-item-5">
+                <div class="u-container-layout u-similar-container u-container-layout-9">
+                  <h6 onclick="toggleSection(1)" style="cursor: pointer" class="u-align-right u-text u-text-body-alt-color u-text-default u-text-17">
+                    لوحة التحكم&nbsp;<span class="u-file-icon u-icon u-text-white u-icon-5"><img src="Layout/images/4725672-bf8ca48a.png" alt="" /></span>
+                  </h6>
+                </div>
+              </div>
+              <div onclick="toggleSection(2)" style="cursor: pointer" class="u-container-align-right u-container-style u-custom-item u-hover-feature u-list-item u-radius u-repeater-item u-shape-round u-list-item-6">
+                <div class="u-container-layout u-similar-container u-container-layout-10">
+                  <h6 class="u-align-right u-text u-text-body-alt-color u-text-default u-text-18">
+                    الباقات​&nbsp;<span class="u-file-icon u-icon u-text-white u-icon-6"><img src="Layout/images/879757-c80d89ad.png" alt="" /></span>
+                  </h6>
+                </div>
+              </div>
+              <div onclick="toggleSection(3)" style="cursor: pointer" class="u-container-align-right u-container-style u-custom-item u-hover-feature u-list-item u-radius u-repeater-item u-shape-rectangle u-list-item-7">
+                <div class="u-container-layout u-similar-container u-container-layout-11">
+                  <h6 class="u-align-right u-text u-text-body-alt-color u-text-default u-text-19">
+                    العملاء&nbsp;<span class="u-file-icon u-icon u-text-white u-icon-7"><img src="Layout/images/3126647-37e670d1.png" alt="" /></span>
+                  </h6>
+                </div>
+              </div>
+              <div onclick="toggleSection(4)" style="cursor: pointer" class="u-container-align-right u-container-style u-custom-color-3 u-custom-item u-list-item u-radius u-repeater-item u-shape-round u-list-item-8">
+                <div class="u-container-layout u-similar-container u-container-layout-12">
+                  <h6 class="u-align-right u-text u-text-body-alt-color u-text-default u-text-20">
+                    القوالب​&nbsp;<span class="u-file-icon u-icon u-text-white u-icon-8"><img src="Layout/images/2611701-5bf827d3.png" alt="" /></span>
+                  </h6>
+                </div>
+              </div>
+              <div onclick="toggleSection(5)" style="cursor: pointer" class="u-container-align-right u-container-style u-custom-item u-hover-feature u-list-item u-radius u-repeater-item u-shape-round u-list-item-9">
+                <div class="u-container-layout u-similar-container u-container-layout-13">
+                  <h6 class="u-align-right u-text u-text-body-alt-color u-text-default u-text-21">
+                    الصفحات​&nbsp;<span class="u-file-icon u-icon u-text-white u-icon-9"><img src="Layout/images/3650317-11f1865c.png" alt="" /></span>
+                  </h6>
+                </div>
+              </div>
+              <div onclick="toggleSection(6)" style="cursor: pointer" class="u-container-align-right u-container-style u-custom-item u-hover-feature u-list-item u-radius u-repeater-item u-shape-round u-list-item-10">
+                <div class="u-container-layout u-similar-container u-container-layout-14">
+                  <h6 class="u-align-right u-text u-text-body-alt-color u-text-default u-text-22">
+                    باركود​&nbsp;<span class="u-file-icon u-icon u-text-white u-icon-10"><img src="Layout/images/3867237-82c8a9c1.png" alt="" /></span>
+                  </h6>
+                </div>
+              </div>
+            </div>
+          </div>
+          <a href="#" class="u-align-center u-border-2 u-border-hover-custom-color-3 u-border-white u-btn u-btn-round u-button-style u-hover-custom-color-3 u-hover-feature u-none u-radius u-btn-1">الصفحة الرئيسية
+          </a>
+          <a href="#" class="u-align-center u-border-2 u-border-hover-custom-color-3 u-border-white u-btn u-btn-round u-button-style u-hover-custom-color-3 u-hover-feature u-none u-radius u-btn-2">تواصل مع المطور
+          </a>
+        </div>
+      </div>
+    </div>
+    </div>
+    </div>
+
+
+
+
+
+  </section>
+  <section class="u-clearfix u-valign-middle-lg u-valign-middle-md u-valign-middle-sm u-valign-middle-xl u-valign-middle-xs u-section-5 hidden" id="section5">
+    <div class="data-layout-selected padding u-clearfix u-expanded-width u-gutter-20 u-layout-wrap u-layout-wrap-1">
+      <div class="u-layout">
+        <div class="u-layout-row">
+          <div class="u-container-style u-layout-cell u-size-47-md u-size-47-sm u-size-47-xs u-size-49-lg u-size-49-xl u-size-49-xxl u-layout-cell-1">
+            <div class="u-container-layout u-container-layout-1">
+              <div class="u-container-style u-expanded-width u-group u-white u-group-1">
+                <div class="u-container-layout u-container-layout-2">
+                  <%if(user){%>
+                  <%if(user){%>
+                  <% if(user.googleId) { %>
+                  <img class="u-image u-image-circle u-image-1" src="<%= user.avatar %>" alt="<%=user.name%>" data-image-width="1280" data-image-height="853">
+                  <% } else if(!user.googleId) { %>
+                  <img class="u-image u-image-circle u-image-1" src="/img/users/<%= user.avatar %>" alt="<%=user.name%>" data-image-width="1280" data-image-height="853">
+                  <% } %>
+                  <%}%>
+
+                                    <h5 class="u-align-right u-text u-text-default u-text-1"><%=user.name%><br>
+                  <span style="font-weight: 400;">مسؤول الموقع</span>
+                  </h5>
+                  <h5 class="u-align-right u-text u-text-default u-text-palette-5-dark-1 u-text-2">
+                    الصفحات</h5>
+                  <%}%>
+                                </div>
+                            </div>
+                            <div class="padding-rtl u-expanded-width u-list u-list-1">
+                                <div class="u-repeater u-repeater-1">
+                                    <div
+                                            class="u-container-style u-hover-feature u-list-item u-radius u-repeater-item u-shape-round u-white u-list-item-1">
+                                        <div class="u-container-layout u-similar-container u-container-layout-3"><span
+                                                    class="u-custom-color-3 u-file-icon u-icon u-icon-rounded u-radius u-text-white u-icon-1"
+                                                    data-animation-name="customAnimationIn"
+                                                    data-animation-duration="1000"><img
+                                                        src="Layout/images/3126647-37e670d1.png" alt=""></span>
+                                            <h5
+                                                    class="u-align-right u-text u-text-custom-color-7 u-text-default u-text-3">
+                                                العملاء </h5>
+                                            <h4 class="u-align-right u-text u-text-palette-5-dark-2 u-text-4"
+                                                data-animation-name="counter" data-animation-event="scroll"
+                                                data-animation-duration="2000"><%=usersCount%> </h4>
+                  <h6 class="u-align-right u-text u-text-custom-color-7 u-text-5">
+                    <span class="u-text-custom-color-5">55%</span> عن الاسبوع الماضي
+                  </h6>
+                </div>
+              </div>
+              <div class="u-container-style u-hover-feature u-list-item u-radius u-repeater-item u-shape-round u-white u-list-item-2">
+                <div class="u-container-layout u-similar-container u-container-layout-4"><span class="u-custom-color-7 u-file-icon u-icon u-icon-rounded u-radius u-text-white u-icon-2" data-animation-name="customAnimationIn" data-animation-duration="1000"><img src="Layout/images/879859-1167d44c.png" alt=""></span>
+                  <h5 class="u-align-right u-text u-text-custom-color-7 u-text-default u-text-6">
+                    المبيعات</h5>
+                  <h4 class="u-align-right u-text u-text-palette-5-dark-2 u-text-7" data-animation-name="counter" data-animation-event="scroll" data-animation-duration="2000">$<%=totalSales%></h4>
+                  <h6 class="u-align-right u-text u-text-custom-color-7 u-text-8">
+                    <span class="u-text-custom-color-5">10%</span> عن الاسبوع الماضي
+                  </h6>
+                </div>
+              </div>
+              <div class="u-container-style u-hover-feature u-list-item u-radius u-repeater-item u-shape-round u-white u-list-item-3">
+                <div class="u-container-layout u-similar-container u-container-layout-5"><span class="u-custom-color-5 u-file-icon u-icon u-icon-rounded u-radius u-text-white u-icon-3" data-animation-name="customAnimationIn" data-animation-duration="1000"><img src="Layout/images/2583118-a805875b.png" alt=""></span>
+                  <h5 class="u-align-right u-text u-text-custom-color-7 u-text-default u-text-9">
+                    الاشراكات</h5>
+                  <h4 class="u-align-right u-text u-text-palette-5-dark-2 u-text-10" data-animation-name="counter" data-animation-event="scroll" data-animation-duration="2000"><%=countUser%></h4>
+                  <h6 class="u-align-right u-text u-text-custom-color-7 u-text-11">
+                    <span class="u-text-custom-color-8">2% </span>عن الاسبوع الماضي
+                  </h6>
+                </div>
+              </div>
+              <div class="u-container-style u-hover-feature u-list-item u-radius u-repeater-item u-shape-round u-white u-list-item-4">
+                <div class="u-container-layout u-similar-container u-container-layout-6"><span class="u-custom-color-6 u-file-icon u-icon u-icon-rounded u-radius u-text-white u-icon-4" data-animation-name="customAnimationIn" data-animation-duration="500" data-animation-delay="0"><img src="Layout/images/2611558-3e4ab628.png" alt=""></span>
+                  <h5 class="u-align-right u-text u-text-custom-color-7 u-text-default u-text-12">
+                    القوالب</h5>
+                  <h4 class="u-align-right u-text u-text-palette-5-dark-2 u-text-13" data-animation-name="counter" data-animation-event="scroll" data-animation-duration="2000"><%=countTemplates%></h4>
+                  <h6 class="u-align-right u-text u-text-custom-color-7 u-text-14">0% عن
+                    الاسبوع الماضي</h6>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="u-container-style u-expanded-width-lg u-expanded-width-md u-expanded-width-sm u-expanded-width-xl u-expanded-width-xs u-group u-hover-feature u-radius u-shape-round u-white u-group-2" data-animation-name="customAnimationIn" data-animation-duration="1000" data-animation-delay="0">
+            <div class="u-container-layout u-container-layout-7">
+              <h4 class="u-align-right u-text u-text-custom-color-7 u-text-default u-text-15">
+                الصفحات</h4>
+              <p class="u-align-right u-small-text u-text u-text-default u-text-palette-5-dark-1 u-text-variant u-text-16">
+                عدد وتفاصيل الصفحات الموجوده</p>
+              <div class="u-expanded-width u-table u-table-responsive u-table-1">
+                <table class="u-table-entity">
+                  <colgroup>
+                    <col width="25%">
+                    <col width="25%">
+                    <col width="25%">
+                    <col width="25%">
+                  </colgroup>
+                  <tbody class="u-align-right u-table-body u-text-palette-5-dark-2 u-table-body-1">
+                    <tr style="height: 43px;">
+                      <td class="u-table-cell">صفحة انشاء حساب</td>
+                      <td class="u-table-cell">صفحة تسجيل الدخول</td>
+                      <td class="u-table-cell">لوحة تحكم العملاء </td>
+                      <td class="u-table-cell">الصفحة الرئيسية</td>
+                    </tr>
+                    <tr style="height: 61px;">
+                      <td class="u-table-cell u-table-cell-5">صفحة شروط الاستخدام</td>
+                      <td class="u-table-cell u-table-cell-6">صفحة الخصوصية</td>
+                      <td class="u-table-cell u-table-cell-7">صفحة رمز الارسال</td>
+                      <td class="u-table-cell u-table-cell-8">صفحة تعيين كلمة مرور</td>
+                    </tr>
+                    <tr style="height: 61px;">
+                      <td class="u-table-cell u-table-cell-9">صفحة السيرة الذاتية</td>
+                      <td class="u-table-cell u-table-cell-10">صفحة التحميل 404</td>
+                      <td class="u-table-cell u-table-cell-11">صفحة الاسعار</td>
+                      <td class="u-table-cell">صفحة قصتنا</td>
+                    </tr>
+                    <tr style="height: 61px;">
+                      <td class="u-table-cell u-table-cell-13">صفحة انشاء موقع</td>
+                      <td class="u-table-cell u-table-cell-14">صفحة البريد الالكتروني</td>
+                      <td class="u-table-cell u-table-cell-15">صفحة تعقب الوظيفة</td>
+                      <td class="u-table-cell">صفحة خطاب الغلاف</td>
+                    </tr>
+                    <tr style="height: 61px;">
+                      <td class="u-table-cell u-table-cell-17">صفحة قوالب صفحات الويب</td>
+                      <td class="u-table-cell u-table-cell-18">صفحة قوالب البريد
+                        الالكتروني</td>
+                      <td class="u-table-cell u-table-cell-19">صفحة قوالب خطاب الغلاف</td>
+                      <td class="u-table-cell">صفحة قوالب السيرة الذاتية</td>
+                    </tr>
+                    <tr style="height: 61px;">
+                      <td class="u-table-cell u-table-cell-21">صفحة تحرير صفحات الويب
+                      </td>
+                      <td class="u-table-cell u-table-cell-22">صفحة تحرير البريد
+                        الالكتروني </td>
+                      <td class="u-table-cell u-table-cell-23">صفحة تحرير خطاب الغلاف
+                      </td>
+                      <td class="u-table-cell">صفحة تحرير السيرة الذاتية </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="u-container-style u-gradient u-layout-cell u-radius u-shape-round u-size-11-lg u-size-11-xl u-size-11-xxl u-size-13-md u-size-13-sm u-size-13-xs u-layout-cell-2">
+        <div class="u-container-layout u-container-layout-8">
+          <div class="u-expanded-width u-list u-list-2">
+            <div class="u-repeater u-repeater-2">
+              <div onclick="toggleSection(1)" style="cursor: pointer" class="u-container-align-right u-container-style u-custom-item u-hover-feature u-list-item u-radius u-repeater-item u-shape-rectangle u-list-item-5">
+                <div class="u-container-layout u-similar-container u-container-layout-9">
+                  <h6 class="u-align-right u-text u-text-body-alt-color u-text-default u-text-17">
+                    لوحة التحكم&nbsp;<span class="u-file-icon u-icon u-text-white u-icon-5"><img src="Layout/images/4725672-bf8ca48a.png" alt="" /></span>
+                  </h6>
+                </div>
+              </div>
+              <div onclick="toggleSection(2)" style="cursor: pointer" class="u-container-align-right u-container-style u-custom-item u-hover-feature u-list-item u-radius u-repeater-item u-shape-round u-list-item-6">
+                <div class="u-container-layout u-similar-container u-container-layout-10">
+                  <h6 class="u-align-right u-text u-text-body-alt-color u-text-default u-text-18">
+                    الباقات​&nbsp;<span class="u-file-icon u-icon u-text-white u-icon-6"><img src="Layout/images/879757-c80d89ad.png" alt="" /></span>
+                  </h6>
+                </div>
+              </div>
+              <div onclick="toggleSection(3)" style="cursor: pointer" class="u-container-align-right u-container-style u-custom-item u-hover-feature u-list-item u-radius u-repeater-item u-shape-rectangle u-list-item-7">
+                <div class="u-container-layout u-similar-container u-container-layout-11">
+                  <h6 class="u-align-right u-text u-text-body-alt-color u-text-default u-text-19">
+                    العملاء&nbsp;<span class="u-file-icon u-icon u-text-white u-icon-7"><img src="Layout/images/3126647-37e670d1.png" alt="" /></span>
+                  </h6>
+                </div>
+              </div>
+              <div onclick="toggleSection(4)" style="cursor: pointer" class="u-container-align-right u-container-style u-custom-item u-hover-feature u-list-item u-radius u-repeater-item u-shape-rectangle u-list-item-8">
+                <div class="u-container-layout u-similar-container u-container-layout-12">
+                  <h6 class="u-align-right u-text u-text-body-alt-color u-text-default u-text-20">
+                    القوالب​&nbsp;<span class="u-file-icon u-icon u-text-white u-icon-8"><img src="Layout/images/2611701-5bf827d3.png" alt="" /></span>
+                  </h6>
+                </div>
+              </div>
+              <div onclick="toggleSection(5)" style="cursor: pointer" class="u-container-align-right u-container-style u-custom-color-3 u-custom-item u-list-item u-radius u-repeater-item u-shape-round u-list-item-9">
+                <div class="u-container-layout u-similar-container u-container-layout-13">
+                  <h6 class="u-align-right u-text u-text-body-alt-color u-text-default u-text-21">
+                    الصفحات​&nbsp;<span class="u-file-icon u-icon u-text-white u-icon-9"><img src="Layout/images/3650317-11f1865c.png" alt="" /></span>
+                  </h6>
+                </div>
+              </div>
+              <div onclick="toggleSection(6)" style="cursor: pointer" class="u-container-align-right u-container-style u-custom-item u-hover-feature u-list-item u-radius u-repeater-item u-shape-round u-list-item-10">
+                <div class="u-container-layout u-similar-container u-container-layout-14">
+                  <h6 class="u-align-right u-text u-text-body-alt-color u-text-default u-text-22">
+                    باركود​&nbsp;<span class="u-file-icon u-icon u-text-white u-icon-10"><img src="Layout/images/3867237-82c8a9c1.png" alt="" /></span>
+                  </h6>
+                </div>
+              </div>
+            </div>
+          </div>
+          <a href="#" class="u-align-center u-border-2 u-border-hover-custom-color-3 u-border-white u-btn u-btn-round u-button-style u-hover-custom-color-3 u-hover-feature u-none u-radius u-btn-1">الصفحة الرئيسية
+          </a>
+          <a href="#" class="u-align-center u-border-2 u-border-hover-custom-color-3 u-border-white u-btn u-btn-round u-button-style u-hover-custom-color-3 u-hover-feature u-none u-radius u-btn-2">تواصل مع المطور
+          </a>
+        </div>
+      </div>
+    </div>
+    </div>
+    </div>
+
+
+
+  </section>
+  <section class="u-clearfix u-valign-middle-lg u-valign-middle-md u-valign-middle-sm u-valign-middle-xl u-valign-middle-xs u-section-6 hidden" id="section6">
+    <div class="data-layout-selected padding u-clearfix u-expanded-width u-gutter-20 u-layout-wrap u-layout-wrap-1">
+      <div class="u-layout">
+        <div class="u-layout-row">
+          <div class="u-container-style u-layout-cell u-size-47-md u-size-47-sm u-size-47-xs u-size-49-lg u-size-49-xl u-size-49-xxl u-layout-cell-1">
+            <div class="u-container-layout u-container-layout-1">
+              <div class="u-container-style u-expanded-width u-group u-white u-group-1">
+                <div class="u-container-layout u-container-layout-2">
+                  <%if(user){%>
+                  <%if(user){%>
+                  <% if(user.googleId) { %>
+                  <img class="u-image u-image-circle u-image-1" src="<%= user.avatar %>" alt="<%=user.name%>" data-image-width="1280" data-image-height="853">
+                  <% } else if(!user.googleId) { %>
+                  <img class="u-image u-image-circle u-image-1" src="/img/users/<%= user.avatar %>" alt="<%=user.name%>" data-image-width="1280" data-image-height="853">
+                  <% } %>
+                  <%}%>
+
+                                    <h5 class="u-align-right u-text u-text-default u-text-1"><%=user.name%><br>
+                  <span style="font-weight: 400;">مسؤول الموقع</span>
+                  </h5>
+                  <h5 class="u-align-right u-text u-text-default u-text-palette-5-dark-1 u-text-2">
+                    لوحة التحكم</h5>
+                  <%}%>
+                                </div>
+                            </div>
+                            <div class="padding-rtl u-expanded-width u-list u-list-1">
+                                <div class="u-repeater u-repeater-1">
+                                    <div
+                                            class="u-container-style u-hover-feature u-list-item u-radius u-repeater-item u-shape-round u-white u-list-item-1">
+                                        <div class="u-container-layout u-similar-container u-container-layout-3"><span
+                                                    class="u-custom-color-3 u-file-icon u-icon u-icon-rounded u-radius u-text-white u-icon-1"
+                                                    data-animation-name="customAnimationIn"
+                                                    data-animation-duration="1000"><img
+                                                        src="Layout/images/3126647-37e670d1.png" alt=""></span>
+                                            <h5
+                                                    class="u-align-right u-text u-text-custom-color-7 u-text-default u-text-3">
+                                                العملاء </h5>
+                                            <h4 class="u-align-right u-text u-text-palette-5-dark-2 u-text-4"
+                                                data-animation-name="counter" data-animation-event="scroll"
+                                                data-animation-duration="2000"><%=usersCount%> </h4>
+                  <h6 class="u-align-right u-text u-text-custom-color-7 u-text-5">
+                    <span class="u-text-custom-color-5">55%</span> عن الاسبوع الماضي
+                  </h6>
+                </div>
+              </div>
+              <div class="u-container-style u-hover-feature u-list-item u-radius u-repeater-item u-shape-round u-white u-list-item-2">
+                <div class="u-container-layout u-similar-container u-container-layout-4"><span class="u-custom-color-7 u-file-icon u-icon u-icon-rounded u-radius u-text-white u-icon-2" data-animation-name="customAnimationIn" data-animation-duration="1000"><img src="Layout/images/879859-1167d44c.png" alt=""></span>
+                  <h5 class="u-align-right u-text u-text-custom-color-7 u-text-default u-text-6">
+                    المبيعات</h5>
+                  <h4 class="u-align-right u-text u-text-palette-5-dark-2 u-text-7" data-animation-name="counter" data-animation-event="scroll" data-animation-duration="2000">$<%=totalSales%></h4>
+                  <h6 class="u-align-right u-text u-text-custom-color-7 u-text-8">
+                    <span class="u-text-custom-color-5">10%</span> عن الاسبوع الماضي
+                  </h6>
+                </div>
+              </div>
+              <div class="u-container-style u-hover-feature u-list-item u-radius u-repeater-item u-shape-round u-white u-list-item-3">
+                <div class="u-container-layout u-similar-container u-container-layout-5"><span class="u-custom-color-5 u-file-icon u-icon u-icon-rounded u-radius u-text-white u-icon-3" data-animation-name="customAnimationIn" data-animation-duration="1000"><img src="Layout/images/2583118-a805875b.png" alt=""></span>
+                  <h5 class="u-align-right u-text u-text-custom-color-7 u-text-default u-text-9">
+                    الاشراكات</h5>
+                  <h4 class="u-align-right u-text u-text-palette-5-dark-2 u-text-10" data-animation-name="counter" data-animation-event="scroll" data-animation-duration="2000"><%=countUser%></h4>
+                  <h6 class="u-align-right u-text u-text-custom-color-7 u-text-11">
+                    <span class="u-text-custom-color-8">2% </span>عن الاسبوع الماضي
+                  </h6>
+                </div>
+              </div>
+              <div class="u-container-style u-hover-feature u-list-item u-radius u-repeater-item u-shape-round u-white u-list-item-4">
+                <div class="u-container-layout u-similar-container u-container-layout-6"><span class="u-custom-color-6 u-file-icon u-icon u-icon-rounded u-radius u-text-white u-icon-4" data-animation-name="customAnimationIn" data-animation-duration="500" data-animation-delay="0"><img src="Layout/images/2611558-3e4ab628.png" alt=""></span>
+                  <h5 class="u-align-right u-text u-text-custom-color-7 u-text-default u-text-12">
+                    القوالب</h5>
+                  <h4 class="u-align-right u-text u-text-palette-5-dark-2 u-text-13" data-animation-name="counter" data-animation-event="scroll" data-animation-duration="2000"><%=countTemplates%></h4>
+                  <h6 class="u-align-right u-text u-text-custom-color-7 u-text-14">0% عن
+                    الاسبوع الماضي</h6>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="u-container-style u-expanded-width u-group u-hover-feature u-radius u-shape-round u-white u-group-2" data-animation-name="customAnimationIn" data-animation-duration="1000" data-animation-delay="0">
+            <div class="u-container-layout u-container-layout-7">
+              <h4 class="u-align-right u-text u-text-custom-color-7 u-text-default u-text-15">
+                الباركود
+              </h4>
+              <div class="rtl u-form u-form-1">
+                <form action="#" class="u-clearfix u-form-horizontal u-form-spacing-10 u-inner-form" source="email" name="form-1" style="padding: 10px">
+                  <div class="u-form-email u-form-group u-label-none">
+                    <label for="email-f458" class="u-label">Email</label>
+                    <input id="search-coupon" type="email" placeholder="ابحث عن الباركود المطلوب" id="email-f458" name="search" class="u-input u-input-rectangle u-radius u-input-1" required="required" />
+                  </div>
+                  <div class="u-align-left u-form-group u-form-submit u-label-none">
+                    <a href="#" class="u-btn u-btn-submit u-button-style u-btn-1"></a>
+                  </div>
+                  <div class="u-form-send-message u-form-send-success">
+                    Thank you! Your message has been sent.
+                  </div>
+                  <div class="u-form-send-error u-form-send-message">
+                    Unable to send your message. Please fix errors then
+                    try again.
+                  </div>
+                  <input type="hidden" value="" name="recaptchaResponse" />
+                </form>
+              </div>
+              <p class="u-align-right u-small-text u-text u-text-default u-text-palette-5-dark-1 u-text-variant u-text-16">
+                تفاصيل ومده جميع الباركود
+              </p>
+              <div class="u-expanded-width u-table u-table-responsive u-table-1">
+                <table class="u-table-entity">
+                  <colgroup>
+                    <col width="25%" />
+                    <col width="25%" />
+                    <col width="25%" />
+                    <col width="25%" />
+                  </colgroup>
+                  <thead class="u-align-right u-table-header u-text-palette-5-dark-1 u-table-header-1">
+                    <tr style="height: 47px">
+                      <th class="u-align-center u-table-cell">الحالة</th>
+                      <th class="u-align-center u-table-cell">الخصم</th>
+                      <th class="u-align-center u-table-cell">المدة</th>
+                      <th class="u-table-cell">الكود</th>
+                    </tr>
+                  </thead>
+                   <tbody id="coupon-list" style="cursor: pointer"  class="u-align-right u-table-body u-text-palette-5-dark-2 u-table-body-1">
+                  </tbody>
+                </table>
+              </div>
+              <!-- Mostafa -->
+              <!-- <a href="#" class="u-align-center u-border-0 u-btn u-button-style u-hover-feature u-hover-white u-white u-btn-2"><span class="u-icon u-icon-5"><svg class="u-svg-content" viewBox="0 0 30.727 30.727" x="0px" y="0px" style="width: 1em; height: 1em">
+                    <path d="M29.994,10.183L15.363,24.812L0.733,10.184c-0.977-0.978-0.977-2.561,0-3.536c0.977-0.977,2.559-0.976,3.536,0   l11.095,11.093L26.461,6.647c0.977-0.976,2.559-0.976,3.535,0C30.971,7.624,30.971,9.206,29.994,10.183z"></path>
+                  </svg></span>&nbsp;المزيد
+              </a> -->
+              <a onclick="togglecode1()" class="u-align-center u-border-2 u-border-custom-color-1 u-border-hover-custom-color-1 u-btn u-btn-round u-button-style u-hover-custom-color-1 u-hover-feature u-none u-radius u-btn-2">
+                اضافة</a>
+            </div>
+          </div>
+          <div class="rtl u-align-center u-form u-form-checks-spacing-0 u-form-2 hidden" id="formcode1">
+            <form action="/api/coupon/create-coupon" method="post" target="responseFrame" class="u-clearfix u-form-spacing-10  u-inner-form" source="email" name="form" style="padding: 10px">
+              <div class="u-form-group u-label-top">
+                <label for="email-3793" class="u-label u-label-2">الباركود</label>
+                <input type="text" placeholder="ادخل الرقم المتسلسل" id="email-3793" name="code" class="u-border-2 u-border-custom-color-1 u-border-no-left u-border-no-right u-border-no-top u-input u-input-rectangle u-none" />
+              </div>
+              <div class="u-form-group u-label-top u-form-group-4">
+                <label for="text-3d8a" class="u-label u-label-3">المده</label>
+                <input type="text" placeholder=" (Ex. 1d, 1w, 1m)أدخل مدة فعالية الباركود" id="text-3d8a" name="expirationDate" class="u-border-2 u-border-custom-color-1 u-border-no-left u-border-no-right u-border-no-top u-input u-input-rectangle u-none" />
+              </div>
+              <div class="u-form-group u-label-top u-form-group-5">
+                <label for="text-a438" class="u-label u-label-4">الخصم</label>
+                <input type="text" placeholder="ادخل حجم الخصم للباركود" id="text-a438" name="value" class="u-border-2 u-border-custom-color-1 u-border-no-left u-border-no-right u-border-no-top u-input u-input-rectangle u-none" />
+              </div>
+              <div class="u-align-left u-form-group  u-label-top">
+                <button href="#" class="u-btn u-btn-round  u-button-style u-custom-color-1 u-radius u-btn-3">اضافة</button>
+              </div>
+            </form>
+          </div>
+          <!-- addd -->
+          <div class="rtl u-align-center u-form u-form-checks-spacing-0 u-form-3 hidden" id="formcode2">
+            <form id="couopnForm" action="#" method="post" target="responseFrame" class="u-clearfix u-form-spacing-10  u-inner-form" source="email" name="form" style="padding: 10px">
+              <p class="u-form-group u-form-text u-text u-text-17" >
+                الكود : <span id="couponCode">-</span>
+              </p>
+              <p class="u-form-group u-form-text u-text u-text-18" >
+                المدة : <span id="couponExpireDate">-</span>
+              </p>
+              <p class="u-form-group u-form-text u-text u-text-19" >
+                الخصم : <span id="couponValue">-</span>
+              </p>
+              <p class="u-form-group u-form-text u-text u-text-20" >
+                الحالة : <span id="couponState">-</span>
+              </p>
+              <div class="u-form-group u-label-top">
+                <label class="u-label u-label-5">الباركود</label>
+                <input type="text" placeholder="ادخل الرقم المتسلسل" id="email-3793" name="code" class="u-border-2 u-border-custom-color-1 u-border-no-left u-border-no-right u-border-no-top u-input u-input-rectangle u-none" />
+              </div>
+              <div class="u-form-group u-label-top u-form-group-12">
+                <label class="u-label u-label-6">المده</label>
+                <input type="text" placeholder="ادخل مدة فعالية الباركود" id="text-3d8a" name="expirationDate" class="u-border-2 u-border-custom-color-1 u-border-no-left u-border-no-right u-border-no-top u-input u-input-rectangle u-none" />
+              </div>
+              <div class="u-form-group u-label-top u-form-group-13">
+                <label class="u-label u-label-7">الخصم</label>
+                <input type="text" placeholder="ادخل حجم الخصم للباركود" id="text-a438" name="value" class="u-border-2 u-border-custom-color-1 u-border-no-left u-border-no-right u-border-no-top u-input u-input-rectangle u-none" />
+              </div>
+              <div class="u-align-left u-form-group  u-label-top">
+                <button href="#" class="u-btn u-btn-round  u-button-style u-custom-color-1 u-radius u-btn-6">تعديل</button>
+              </div>
+            </form>
+          </div>
+        
+        </div>
+      </div>
+      <div class="u-container-style u-gradient u-layout-cell u-radius u-shape-round u-size-11-lg u-size-11-xl u-size-11-xxl u-size-13-md u-size-13-sm u-size-13-xs u-layout-cell-2">
+        <div class="u-container-layout u-container-layout-8">
+          <div class="u-expanded-width u-list u-list-2">
+            <div class="u-repeater u-repeater-2">
+              <div onclick="toggleSection(1)" style="cursor: pointer" class="u-container-align-right u-container-style u-custom-item u-hover-feature u-list-item u-radius u-repeater-item u-shape-rectangle u-list-item-5" data-animation-name="" data-animation-duration="0" data-animation-delay="0" data-animation-direction="">
+                <div class="u-container-layout u-similar-container u-container-layout-9">
+                  <h6 class="u-align-right u-text u-text-body-alt-color u-text-default u-text-17">
+                    لوحة التحكم&nbsp;<span class="u-file-icon u-icon u-text-white u-icon-6"><img src="Layout/images/4725672-bf8ca48a.png" alt="" /></span>
+                  </h6>
+                </div>
+              </div>
+              <div onclick="toggleSection(2)" style="cursor: pointer" class="u-container-align-right u-container-style u-custom-item u-hover-feature u-list-item u-radius u-repeater-item u-shape-rectangle u-list-item-6" data-animation-name="" data-animation-duration="0" data-animation-delay="0" data-animation-direction="">
+                <div class="u-container-layout u-similar-container u-container-layout-10">
+                  <h6 class="u-align-right u-text u-text-body-alt-color u-text-default u-text-18">
+                    الباقات​&nbsp;<span class="u-file-icon u-icon u-text-white u-icon-7"><img src="Layout/images/879757-c80d89ad.png" alt="" /></span>
+                  </h6>
+                </div>
+              </div>
+              <div onclick="toggleSection(3)" style="cursor: pointer" class="u-container-align-right u-container-style u-custom-item u-hover-feature u-list-item u-radius u-repeater-item u-shape-rectangle u-list-item-7" data-animation-name="" data-animation-duration="0" data-animation-delay="0" data-animation-direction="">
+                <div class="u-container-layout u-similar-container u-container-layout-11">
+                  <h6 class="u-align-right u-text u-text-body-alt-color u-text-default u-text-19">
+                    العملاء&nbsp;<span class="u-file-icon u-icon u-text-white u-icon-8"><img src="Layout/images/3126647-37e670d1.png" alt="" /></span>
+                  </h6>
+                </div>
+              </div>
+              <div onclick="toggleSection(4)" style="cursor: pointer" class="u-container-align-right u-container-style u-custom-item u-hover-feature u-list-item u-radius u-repeater-item u-shape-rectangle u-list-item-8" data-animation-name="" data-animation-duration="0" data-animation-delay="0" data-animation-direction="">
+                <div class="u-container-layout u-similar-container u-container-layout-12">
+                  <h6 class="u-align-right u-text u-text-body-alt-color u-text-default u-text-20">
+                    القوالب​&nbsp;<span class="u-file-icon u-icon u-text-white u-icon-9"><img src="Layout/images/2611701-5bf827d3.png" alt="" /></span>
+                  </h6>
+                </div>
+              </div>
+              <div onclick="toggleSection(5)" style="cursor: pointer" class="u-container-align-right u-container-style u-custom-item u-hover-feature u-list-item u-radius u-repeater-item u-shape-rectangle u-list-item-9" data-animation-name="" data-animation-duration="0" data-animation-delay="0" data-animation-direction="">
+                <div class="u-container-layout u-similar-container u-container-layout-13">
+                  <h6 class="u-align-right u-text u-text-body-alt-color u-text-default u-text-21">
+                    الصفحات​&nbsp;<span class="u-file-icon u-icon u-text-white u-icon-10"><img src="Layout/images/3650317-11f1865c.png" alt="" /></span>
+                  </h6>
+                </div>
+              </div>
+              <div onclick="toggleSection(6)" style="cursor: pointer" class="u-container-align-right u-container-style u-custom-color-3 u-custom-item u-hover-feature u-list-item u-radius u-repeater-item u-shape-rectangle u-list-item-10" data-animation-name="" data-animation-duration="0" data-animation-delay="0" data-animation-direction="">
+                <div class="u-container-layout u-similar-container u-container-layout-14">
+                  <h6 class="u-align-right u-text u-text-body-alt-color u-text-default u-text-22">
+                    باركود​&nbsp;<span class="u-file-icon u-icon u-text-white u-icon-11"><img src="Layout/images/3867237-82c8a9c1.png" alt="" /></span>
+                  </h6>
+                </div>
+              </div>
+            </div>
+          </div>
+          <a href="/" class="u-align-center u-border-2 u-border-hover-custom-color-3 u-border-white u-btn u-btn-round u-button-style u-hover-custom-color-3 u-hover-feature u-none u-radius u-btn-4">الصفحة الرئيسية
+          </a>
+          <a href="#" class="u-align-center u-border-2 u-border-hover-custom-color-3 u-border-white u-btn u-btn-round u-button-style u-hover-custom-color-3 u-hover-feature u-none u-radius u-btn-5">تواصل مع المطور
+          </a>
+        </div>
+      </div>
+    </div>
+    </div>
+    </div>
+  </section>
+
+
+  <script src="Layout/Arabic/js/toggleSection.js"></script>
+
+  <iframe id="responseFrame" name="responseFrame" style="display:none; " data-url="admin-dashboard"></iframe>
+  <script src="Layout/Arabic/js/alert.js" defer=""></script>
+  <script src="Layout/Arabic/js/updateLastActive.js" defer=""></script>
+  <script src="Layout/Arabic/js/updateDashboard.js" defer=""></script>
+</body>
+
+</html>

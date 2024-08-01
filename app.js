@@ -6,12 +6,11 @@ const globalErrorHandler = require("./controller/errorController");
 const userRouter = require("./router/userRouter");
 const viewRouter = require("./router/viewRouter");
 const templateRouter = require("./router/templateRouter");
-const paymentRouter = require("./router/paymentRouter");
-const dashboardRouter = require("./router/dashboardRouter")
-const pricePlanRouter = require("./router/pricePlanRouter")
+const dashboardRouter = require("./router/dashboardRouter");
+const couponRouter = require("./router/couponRouter");
 const payment = require("./router/payment");
+const pricePlanRouter = require("./router/pricePlanRouter");
 const cookieParser = require("cookie-parser");
-const paypal = require("./controller/paymentController");
 const bodyParser = require("body-parser");
 const path = require("path");
 const session = require("express-session");
@@ -57,7 +56,8 @@ app.use("/", viewRouter);
 app.use("/api/user", userRouter);
 app.use("/api/template", templateRouter);
 app.use("/api/dashboard", dashboardRouter);
-app.use("/api/pricePlan", pricePlanRouter);
+app.use("/api/coupon", couponRouter);
+app.use("/api/price-plan", pricePlanRouter);
 
 app.all("*", (req, res, next) => {
   next(new AppError(`can't find this route ${req.originalUrl} `, 400));

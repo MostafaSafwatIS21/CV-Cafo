@@ -4,6 +4,7 @@ const AppError = require("../utils/AppError");
 const catchAsync = require("../utils/catchAsync");
 const paymobAPI = require("../utils/paymobConfig");
 const User = require("../models/userModel");
+const Coupon = require("../models/couponModel");
 
 // PayPal configuration
 const environment = new paypal.core.SandboxEnvironment(
@@ -13,7 +14,7 @@ const environment = new paypal.core.SandboxEnvironment(
 const client = new paypal.core.PayPalHttpClient(environment);
 
 // Helper function to create PayPal order
-const createPayPalOrder = async (price, duration, name,req) => {
+const createPayPalOrder = async (price, duration, name, req) => {
   try {
     const request = new paypal.orders.OrdersCreateRequest();
     request.prefer("return=representation");
@@ -41,22 +42,19 @@ const createPayPalOrder = async (price, duration, name,req) => {
 
     const order = await client.execute(request);
     return order.result.links.find((link) => link.rel === "approve").href;
-    console.log("PayPal order created:", order);
   } catch (error) {
     console.error("PayPal error:", error);
   }
 };
 
 // Helper function to create PayMob order
-const createPayMobOrder = async (price, duration, name,req) => {
+const createPayMobOrder = async (price, duration, name, req) => {
   try {
     const response = await paymobAPI.post("/auth/tokens", {
       api_key: process.env.PAYMOB_API_KEY,
     });
 
     const authToken = response.data.token;
-    console.log("PayMob auth token:", authToken);
-
     // Order Registration API
     const orderResponse = await paymobAPI.post("/ecommerce/orders", {
       auth_token: authToken,
@@ -67,8 +65,6 @@ const createPayMobOrder = async (price, duration, name,req) => {
     });
 
     const orderId = orderResponse.data.id;
-    console.log("Order ID:", orderId);
-
     // Payment Key Request
     const paymentKeyResponse = await paymobAPI.post(
       "/acceptance/payment_keys",
@@ -119,37 +115,50 @@ const createPayMobOrder = async (price, duration, name,req) => {
 };
 
 exports.createPayment = catchAsync(async (req, res, next) => {
-  const { duration, name,paymentMethod } = req.body;
-  console.log("body",req.body)
-const pricePlan = await PricePlan.findOne({ name,duration })
-  console.log("plan",pricePlan)
+  const { duration, name, paymentMethod, code, codeCheck } = req.body;
+  let discount = 0;
+  if (codeCheck) {
+    const coupon = await Coupon.findOne({ code });
+    if (!coupon) {
+      return next(new AppError("Invalid coupon code.", 400));
+    }
+    discount = coupon.value;
+  }
+
+  if (!duration || !name || !paymentMethod) {
+    return next(new AppError("Please provide all fields", 400));
+  }
+
+  const pricePlan = await PricePlan.findOne({ name, duration });
   if (!pricePlan) {
     return next(new AppError("Invalid Price Plan.", 400));
   }
 
   let paymentUrl;
-  let price = pricePlan.price;
+
+  const finalPrice = pricePlan.price - (discount / 100) * pricePlan.price; //price - discount / 100 * price;
+
   if (paymentMethod === "paypal") {
-    paymentUrl = await createPayPalOrder(price, duration,name, req);
+    paymentUrl = await createPayPalOrder(finalPrice, duration, name, req);
   } else if (paymentMethod === "paymob") {
-    paymentUrl = await createPayMobOrder(price, duration, req);
+    paymentUrl = await createPayMobOrder(finalPrice, duration, name, req);
   } else {
     return next(new AppError("Invalid payment method.", 400));
   }
-  console.log("paymentUrl____________",paymentUrl)
-  res.redirect(paymentUrl);
+
+  // Redirect to payment URL or provide it for iframe
+  res.json({ paymentUrl });
 });
 
 exports.paymentSuccess = catchAsync(async (req, res, next) => {
-  const { duration, paymentMethod, token, name,PayerID } = req.query;
-  console.log("query",req.query)
-  const user = await  User.findById(req.user.id);
-  const pricePlan = await PricePlan.findOne({ name}, { duration })
+  const { duration, paymentMethod, token, name } = req.query;
+
+  const user = await User.findById(req.user.id);
+  const pricePlan = await PricePlan.findOne({ name, duration });
   if (!pricePlan) {
     return next(new AppError("Invalid Price Plan.", 400));
   }
-// will edit
-  let subscriptionAmount;
+
   let endDate;
   if (duration === "month") {
     endDate = new Date(Date.now() + 30 * 24 * 60 * 60 * 1000); // 30 days from now
@@ -165,10 +174,9 @@ exports.paymentSuccess = catchAsync(async (req, res, next) => {
 
     try {
       const capture = await client.execute(captureRequest);
-      user.pricingPlan =pricePlan._id
+      user.pricingPlan = pricePlan._id;
       user.subscriptionStartDate = new Date(Date.now());
       user.subscriptionEndDate = endDate;
-      console.log(user)
       await user.save({ validateBeforeSave: false });
 
       res.render("test/success");
@@ -179,10 +187,9 @@ exports.paymentSuccess = catchAsync(async (req, res, next) => {
       );
     }
   } else if (paymentMethod === "paymob") {
-    user.pricingPlan =pricePlan._id
+    user.pricingPlan = pricePlan._id;
     user.subscriptionStartDate = new Date(Date.now());
     user.subscriptionEndDate = endDate;
-    console.log(user)
     await user.save({ validateBeforeSave: false });
 
     res.render("test/success");

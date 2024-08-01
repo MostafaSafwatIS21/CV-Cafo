@@ -1,8 +1,7 @@
-const express = require('express');
-const pricePlanController = require('../controller/pricePlanController');
-const router = express.Router()
+const express = require("express");
+const router = express.Router();
+const { protect } = require("../controller/autheController");
+const { getPricing } = require("../controller/pricePlanController");
 
-router.post("/create-plan", pricePlanController.createPlan)
-router.patch("/update-plan/:id", pricePlanController.updatePlan)
-
+router.get("/getPricing", protect, getPricing);
 module.exports = router;

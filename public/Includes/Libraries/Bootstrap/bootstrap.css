@@ -2722,7 +2722,7 @@ a {
   position: absolute;
   top: 50%;
   transform: translateY(-50%);
-  right: 10px;
+  left: 10px;
   pointer-events: none;
 }
 .u-form-select-wrapper select[size] ~ .u-caret {
@@ -44902,3 +44902,7 @@ a.u-link.u-text-hover-grey-90:hover {
  /*begin-variables base-font-size*/ 
  html { font-size: 16px; }
  /*end-variables base-font-size*/
+
+ .rtl{
+  direction: rtl ;
+ }

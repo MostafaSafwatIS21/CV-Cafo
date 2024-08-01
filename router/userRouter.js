@@ -58,5 +58,4 @@ router.patch(
   userController.updateMe
 );
 
-router.get("/get-status",userController.getUserStatus)
 module.exports = router;

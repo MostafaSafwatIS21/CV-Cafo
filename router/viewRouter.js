@@ -5,10 +5,18 @@ const {
   isLoggedIn,
   ensureAuthenticated,
   protect,
+  isAdmin,
 } = require("../controller/autheController");
+const {
+  updateLastActive,
+  getLastActive,
+} = require("../controller/dashboardController");
 
 // router.get("/", home);
 router.use(isLoggedIn);
+router.post("/update-last-active", protect, updateLastActive);
+router.get("/get-last-active-updates", protect, getLastActive);
+router.get("/admin-dashboard", protect, isAdmin, viewController.adminDashboard);
 router.get("/error", viewController.error);
 router.get("/login", viewController.login);
 router.get("/register", viewController.Register);
@@ -35,6 +43,7 @@ router.get("/Resume-templates", viewController.resumeTemplates);
 router.get("/terms", viewController.terms);
 router.get("/Website-Templates", viewController.websiteTemplates);
 router.get("/Write", viewController.write);
+router.get("/pay", viewController.pay);
 router.get("/Write_1", viewController.write_1);
 router.get("/payment", viewController.payment);
 router.get("/payment__new", viewController.payment__new);

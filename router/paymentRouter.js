@@ -3,7 +3,6 @@ const router = express.Router();
 
 const { protect } = require("../controller/autheController");
 
-
 const paymentController = require("../controller/payment");
 
 router.post("/create-payment", protect, paymentController.createPayment);

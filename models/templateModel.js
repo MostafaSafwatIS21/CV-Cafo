@@ -8,7 +8,6 @@ const templateSchema = new mongoose.Schema({
   },
   type: {
     type: String,
-    required: true,
     enum: [
       "resume",
       "cover letter",
@@ -22,18 +21,19 @@ const templateSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
-  userId: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: "User",
-  },
+  userId: [
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "User",
+    },
+  ],
   isFree: {
     type: Boolean,
     default: false,
     required: true,
   },
-  classifed: {
+  classified: {
     type: String,
-    required: true,
     enum: ["modern", "classic", "creative", "professional"],
     required: [true, "Please provide the classification of the template"],
   },

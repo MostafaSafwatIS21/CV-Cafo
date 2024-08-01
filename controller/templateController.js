@@ -47,7 +47,7 @@ exports.createTemplate = async (req, res, next) => {
       return next(new AppError("Please upload a cover image", 400));
     }
 
-    const { type, price, name } = req.body;
+    const { type, price, name,classified } = req.body;
     const cover = req.file.filename;
     const userId = req.user._id;
 
@@ -57,6 +57,7 @@ exports.createTemplate = async (req, res, next) => {
       userId,
       price: `$${price}`,
       name,
+      classified
     });
 
     res.status(201).json({

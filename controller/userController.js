@@ -104,22 +104,3 @@ exports.updateMe = async (req, res, next) => {
   });
 };
 
-
-/**
- * @last active
- * */
-exports.getUserStatus = catchAsync(async (req, res, next) => {
-  const users = await User.find().select("name email lastActive");
-
-  res.status(200).json({
-    status: "success",
-    data: {
-      users: users.map(user => ({
-        name: user.name,
-        email: user.email,
-        lastActive: user.lastActive,
-        isOnline: user.isOnline
-      }))
-    }
-  });
-})
