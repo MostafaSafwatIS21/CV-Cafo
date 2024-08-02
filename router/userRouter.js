@@ -11,6 +11,7 @@ router.use(autheController.updateLastActive);
 router.post("/signup", autheController.signup);
 router.post("/activate-account", autheController.activateUser);
 router.post("/login", autheController.login);
+
 router.post("/logout", autheController.protect, autheController.logout);
 router.post(
   "/update-password",
@@ -19,11 +20,25 @@ router.post(
 );
 router.post("/forgot-password", autheController.forgetPassword);
 router.post("/reset-password/:token", autheController.resetPassword);
-router.delete(
-  "/deleteMe/:Id",
-  autheController.protect,
-  autheController.deleteMe
+router.post("/deleteMe", autheController.protect, autheController.deleteMe);
+
+router.post(
+  "/set-password",
+  autheController.ensureAuthenticated,
+  autheController.isNewUser,
+  autheController.setPassword
 );
+
+// user routes
+
+router.patch(
+  "/updateMe",
+  autheController.protect,
+  userController.uploadImage,
+  userController.resizeImage,
+  userController.updateMe
+);
+
 // Google OAuth routes
 router.get(
   "/auth/google",
@@ -40,22 +55,6 @@ router.get(
     }
     sendTokenFormGoogle(req.user, 200, res);
   }
-);
-
-router.post(
-  "/set-password",
-  autheController.ensureAuthenticated,
-  autheController.setPassword
-);
-
-// user routes
-
-router.patch(
-  "/updateMe",
-  autheController.protect,
-  userController.uploadImage,
-  userController.resizeImage,
-  userController.updateMe
 );
 
 module.exports = router;

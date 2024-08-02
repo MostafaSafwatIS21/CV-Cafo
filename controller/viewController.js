@@ -21,10 +21,37 @@ exports.Register = async (req, res, next) => {
 exports.home = async (req, res, next) => {
   res.status(200).render("index");
 };
+
+// dashboard
 exports.dashboard = async (req, res, next) => {
   const user = res.locals.user;
-  const resume = await template.find({ type: "resume" });
-  res.status(200).render("dashboard", { user, resume });
+  const allTemplates = await template.find();
+  //
+  const resume = allTemplates.filter((template) => template.type === "resume");
+
+  const coverLetter = allTemplates.filter(
+    (template) => template.type === "cover letter"
+  );
+  const jobTracker = allTemplates.filter(
+    (template) => template.type === "job tracker"
+  );
+  const personalWebsite = allTemplates.filter(
+    (template) => template.type === "personal website"
+  );
+  const emailSignature = allTemplates.filter(
+    (template) => template.type === "email signature"
+  );
+
+  console.log(coverLetter);
+
+  res.status(200).render("dashboard", {
+    user,
+    resume,
+    coverLetter,
+    jobTracker,
+    personalWebsite,
+    emailSignature,
+  });
 };
 exports.forgetPassword = async (req, res, next) => {
   res.status(200).render("ForgetPassword");

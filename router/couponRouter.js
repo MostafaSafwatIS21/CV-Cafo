@@ -10,6 +10,6 @@ router.post(
   isAdmin,
   couponController.updateCoupon
 );
-router.get("/get-coupon", protect, couponController.getCoupon);
+router.post("/get-coupon", protect, couponController.getCoupon);
 router.get("/get-coupons", protect, couponController.getCoupons);
 module.exports = router;

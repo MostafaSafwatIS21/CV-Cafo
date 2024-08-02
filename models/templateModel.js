@@ -30,12 +30,15 @@ const templateSchema = new mongoose.Schema({
   isFree: {
     type: Boolean,
     default: false,
-    required: true,
   },
   classified: {
     type: String,
     enum: ["modern", "classic", "creative", "professional"],
     required: [true, "Please provide the classification of the template"],
+  },
+  htmlFile: {
+    type: String,
+    required: true,
   },
 });
 

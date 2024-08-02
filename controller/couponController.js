@@ -65,6 +65,7 @@ exports.deleteCoupon = catchAsync(async (req, res, next) => {
 
 exports.getCoupon = catchAsync(async (req, res, next) => {
   const { code } = req.body;
+  console.log(req.body);
   const coupon = await Coupon.findOne({ code });
 
   if (!coupon) {

@@ -306,14 +306,15 @@
       <p class="u-align-right u-text u-text-palette-5-dark-1 u-text-2">سيرتك الذاتية الأولى - مجانية 100%، إلى الأبد،
         جميع الميزات، تنزيلات غير محدودة​ نعم حقً</p>
       <div class="u-align-center u-expanded-width u-layout-horizontal u-list u-list-1">
+
         <div class="u-repeater u-repeater-1">
           <%if(resume){%>
             <% for(let i=0; i < resume.length; i++) { %>
               <div class="u-container-style u-list-item u-repeater-item">
-                <div class="u-container-layout u-similar-container u-container-layout-1">
-                  <img class="u-dialog-link u-expanded-width u-image u-image-default u-image-5"
-                    src="/img/covers/<%= resume[i].cover%>" alt="<%resume[i].cover%>" alt="" data-image-width="177"
-                    data-image-height="250" data-href="#sec-417b">
+                <div class="u-container-layout u-similar-container u-valign-middle u-container-layout-1">
+                  <img class="u-dialog-link u-expanded-width u-image u-image-default u-image-5" id="<%=resume[i]._id%>"
+                    src="/img/covers/<%= resume[i].cover%>" alt="<%=resume[i].name%>" 
+                    data-image-width="2000" data-image-height="2000" data-href="#sec-417b">
                 </div>
               </div>
               <% } %>
@@ -369,55 +370,17 @@ c6.177,6.18,9.262,14.271,9.262,22.366C354.708,234.018,351.617,242.115,345.441,24
         لعرض نفسك</p>
       <div class="u-align-center u-expanded-width u-layout-horizontal u-list u-list-1">
         <div class="u-repeater u-repeater-1">
-          <div class="u-container-style u-list-item u-repeater-item">
-            <div class="u-container-layout u-similar-container u-valign-middle u-container-layout-1">
-              <img class="u-expanded-width u-image u-image-default u-image-1" src="layout/images/1000.webp" alt=""
-                data-image-width="150" data-image-height="94">
-            </div>
-          </div>
-          <div class="u-container-style u-list-item u-repeater-item">
-            <div class="u-container-layout u-similar-container u-valign-middle u-container-layout-2">
-              <img class="u-expanded-width u-image u-image-default u-image-2" src="layout/images/10001.webp" alt=""
-                data-image-width="250" data-image-height="156">
-            </div>
-          </div>
-          <div class="u-container-style u-list-item u-repeater-item">
-            <div class="u-container-layout u-similar-container u-valign-middle u-container-layout-3">
-              <img class="u-expanded-width u-image u-image-default u-image-3" src="layout/images/960.webp" alt=""
-                data-image-width="177" data-image-height="250">
-            </div>
-          </div>
-          <div class="u-container-style u-list-item u-repeater-item">
-            <div class="u-container-layout u-similar-container u-valign-middle u-container-layout-4">
-              <img class="u-expanded-width u-image u-image-default u-image-4" src="layout/images/9603.webp" alt=""
-                data-image-width="177" data-image-height="250">
-            </div>
-          </div>
-          <div class="u-container-style u-list-item u-repeater-item">
-            <div class="u-container-layout u-similar-container u-valign-middle u-container-layout-5">
-              <img class="u-dialog-link u-expanded-width u-image u-image-default u-image-5"
-                src="layout/images/9606.webp" alt="" data-image-width="177" data-image-height="250"
-                data-href="#sec-417b">
-            </div>
-          </div>
-          <div class="u-container-style u-list-item u-repeater-item">
-            <div class="u-container-layout u-similar-container u-valign-middle u-container-layout-6">
-              <img class="u-expanded-width u-image u-image-default u-image-6" src="layout/images/9604.webp" alt=""
-                data-image-width="177" data-image-height="250">
-            </div>
-          </div>
-          <div class="u-container-style u-list-item u-repeater-item">
-            <div class="u-container-layout u-similar-container u-valign-middle u-container-layout-7">
-              <img class="u-expanded-width u-image u-image-default u-image-7" src="layout/images/9607.webp" alt=""
-                data-image-width="177" data-image-height="250">
-            </div>
-          </div>
-          <div class="u-container-style u-list-item u-repeater-item">
-            <div class="u-container-layout u-similar-container u-valign-middle u-container-layout-8">
-              <img class="u-expanded-width u-image u-image-default u-image-8" src="layout/images/9605.webp" alt=""
-                data-image-width="177" data-image-height="250">
-            </div>
-          </div>
+          <%if(personalWebsite){%>
+            <% for(let i=0; i < personalWebsite.length; i++) { %>
+              <div class="u-container-style u-list-item u-repeater-item">
+                <div class="u-container-layout u-similar-container u-valign-middle u-container-layout-1">
+                  <img class="u-dialog-link u-expanded-width u-image u-image-default u-image-5" id="<%=resume[i]._id%>"
+                    src="/img/covers/<%= personalWebsite[i].cover%>" alt="<%=personalWebsite[i].name%>" 
+                    data-image-width="2000" data-image-height="2000" data-href="#sec-417b">
+                </div>
+              </div>
+              <% } %>
+                <%}%>
         </div>
         <a class="u-custom-color-6 u-gallery-nav u-gallery-nav-prev u-icon-circle u-opacity u-opacity-70 u-spacing-10 u-text-white u-gallery-nav-1"
           href="#" role="button">
@@ -544,55 +507,17 @@ c6.177,6.18,9.262,14.271,9.262,22.366C354.708,234.018,351.617,242.115,345.441,24
         الأبد، جميع الميزات، تنزيلات غير محدودة، نعم حقًا</p>
       <div class="u-align-center u-expanded-width u-layout-horizontal u-list u-list-1">
         <div class="u-repeater u-repeater-1">
-          <div class="u-container-style u-list-item u-repeater-item">
-            <div class="u-container-layout u-similar-container u-container-layout-1">
-              <img class="u-expanded-width u-image u-image-default u-image-1" src="layout/images/9602.webp" alt=""
-                data-image-width="177" data-image-height="250">
-            </div>
-          </div>
-          <div class="u-container-style u-list-item u-repeater-item">
-            <div class="u-container-layout u-similar-container u-container-layout-2">
-              <img class="u-expanded-width u-image u-image-default u-image-2" src="layout/images/9601.webp" alt=""
-                data-image-width="106" data-image-height="150">
-            </div>
-          </div>
-          <div class="u-container-style u-list-item u-repeater-item">
-            <div class="u-container-layout u-similar-container u-container-layout-3">
-              <img class="u-expanded-width u-image u-image-default u-image-3" src="layout/images/960.webp" alt=""
-                data-image-width="177" data-image-height="250">
-            </div>
-          </div>
-          <div class="u-container-style u-list-item u-repeater-item">
-            <div class="u-container-layout u-similar-container u-container-layout-4">
-              <img class="u-expanded-width u-image u-image-default u-image-4" src="layout/images/9603.webp" alt=""
-                data-image-width="177" data-image-height="250">
-            </div>
-          </div>
-          <div class="u-container-style u-list-item u-repeater-item">
-            <div class="u-container-layout u-similar-container u-container-layout-5">
-              <img class="u-dialog-link u-expanded-width u-image u-image-default u-image-5"
-                src="layout/images/9606.webp" alt="" data-image-width="177" data-image-height="250"
-                data-href="#sec-417b">
-            </div>
-          </div>
-          <div class="u-container-style u-list-item u-repeater-item">
-            <div class="u-container-layout u-similar-container u-container-layout-6">
-              <img class="u-expanded-width u-image u-image-default u-image-6" src="layout/images/9604.webp" alt=""
-                data-image-width="177" data-image-height="250">
-            </div>
-          </div>
-          <div class="u-container-style u-list-item u-repeater-item">
-            <div class="u-container-layout u-similar-container u-container-layout-7">
-              <img class="u-expanded-width u-image u-image-default u-image-7" src="layout/images/9607.webp" alt=""
-                data-image-width="177" data-image-height="250">
-            </div>
-          </div>
-          <div class="u-container-style u-list-item u-repeater-item">
-            <div class="u-container-layout u-similar-container u-container-layout-8">
-              <img class="u-expanded-width u-image u-image-default u-image-8" src="layout/images/9605.webp" alt=""
-                data-image-width="177" data-image-height="250">
-            </div>
-          </div>
+          <%if(coverLetter){%>
+            <% for(let i=0; i < coverLetter.length; i++) { %>
+              <div class="u-container-style u-list-item u-repeater-item">
+                <div class="u-container-layout u-similar-container u-valign-middle u-container-layout-1">
+                  <img class="u-dialog-link u-expanded-width u-image u-image-default u-image-5" id="<%=coverLetter[i]._id%>"
+                    src="/img/covers/<%= coverLetter[i].cover%>" alt="<%=coverLetter[i].name%>" 
+                    data-image-width="2000" data-image-height="2000" data-href="#sec-417b">
+                </div>
+              </div>
+              <% } %>
+                <%}%>
         </div>
         <a class="u-custom-color-6 u-gallery-nav u-gallery-nav-prev u-icon-circle u-opacity u-opacity-70 u-spacing-10 u-text-white u-gallery-nav-1"
           href="#" role="button">
@@ -644,57 +569,17 @@ c6.177,6.18,9.262,14.271,9.262,22.366C354.708,234.018,351.617,242.115,345.441,24
         الأبد، جميع الميزات، تنزيلات غير محدودة، نعم حقًا</p>
       <div class="u-align-center u-expanded-width u-layout-horizontal u-list u-list-1">
         <div class="u-repeater u-repeater-1">
-          <div class="u-container-style u-list-item u-repeater-item">
-            <div class="u-container-layout u-similar-container u-container-layout-1">
-              <img class="u-expanded-width u-image u-image-contain u-image-default u-image-1"
-                src="layout/images/17577180_46_email_signature.jpg" alt="" data-image-width="4000"
-                data-image-height="2000">
-            </div>
-          </div>
-          <div class="u-container-style u-list-item u-repeater-item">
-            <div class="u-container-layout u-similar-container u-container-layout-2">
-              <img class="u-expanded-width u-image u-image-contain u-image-default u-image-2"
-                src="layout/images/32301818_sl_071722_51700_03.jpg" alt="" data-image-width="7801"
-                data-image-height="3001">
-            </div>
-          </div>
-          <div class="u-container-style u-list-item u-repeater-item">
-            <div class="u-container-layout u-similar-container u-container-layout-3">
-              <img class="u-expanded-width u-image u-image-contain u-image-default u-image-3"
-                src="layout/images/10247474.jpg" alt="" data-image-width="3600" data-image-height="2000">
-            </div>
-          </div>
-          <div class="u-container-style u-list-item u-repeater-item">
-            <div class="u-container-layout u-similar-container u-container-layout-4">
-              <img class="u-expanded-width u-image u-image-contain u-image-default u-image-4"
-                src="layout/images/9603.webp" alt="" data-image-width="177" data-image-height="250">
-            </div>
-          </div>
-          <div class="u-container-style u-list-item u-repeater-item">
-            <div class="u-container-layout u-similar-container u-container-layout-5">
-              <img class="u-dialog-link u-expanded-width u-image u-image-contain u-image-default u-image-5"
-                src="layout/images/9606.webp" alt="" data-image-width="177" data-image-height="250"
-                data-href="#sec-417b">
-            </div>
-          </div>
-          <div class="u-container-style u-list-item u-repeater-item">
-            <div class="u-container-layout u-similar-container u-container-layout-6">
-              <img class="u-expanded-width u-image u-image-contain u-image-default u-image-6"
-                src="layout/images/9604.webp" alt="" data-image-width="177" data-image-height="250">
-            </div>
-          </div>
-          <div class="u-container-style u-list-item u-repeater-item">
-            <div class="u-container-layout u-similar-container u-container-layout-7">
-              <img class="u-expanded-width u-image u-image-contain u-image-default u-image-7"
-                src="layout/images/9607.webp" alt="" data-image-width="177" data-image-height="250">
-            </div>
-          </div>
-          <div class="u-container-style u-list-item u-repeater-item">
-            <div class="u-container-layout u-similar-container u-container-layout-8">
-              <img class="u-expanded-width u-image u-image-contain u-image-default u-image-8"
-                src="layout/images/9605.webp" alt="" data-image-width="177" data-image-height="250">
-            </div>
-          </div>
+          <%if(emailSignature){%>
+            <% for(let i=0; i < emailSignature.length; i++) { %>
+              <div class="u-container-style u-list-item u-repeater-item">
+                <div class="u-container-layout u-similar-container u-valign-middle u-container-layout-1">
+                  <img class="u-dialog-link u-expanded-width u-image u-image-default u-image-5" id="<%=emailSignature[i]._id%>"
+                    src="/img/covers/<%= emailSignature[i].cover%>" alt="<%=emailSignature[i].name%>" 
+                    data-image-width="2000" data-image-height="2000" data-href="#sec-417b">
+                </div>
+              </div>
+              <% } %>
+                <%}%>
         </div>
         <a class="u-custom-color-6 u-gallery-nav u-gallery-nav-prev u-icon-circle u-opacity u-opacity-70 u-spacing-10 u-text-white u-gallery-nav-1"
           href="#" role="button">
@@ -734,11 +619,6 @@ c6.177,6.18,9.262,14.271,9.262,22.366C354.708,234.018,351.617,242.115,345.441,24
     </div>
 
   </section>
-
-
-
-
-
 
   <footer class="u-align-center u-clearfix u-custom-color-1 u-footer u-footer" id="sec-3cad">
     <div class="u-clearfix u-sheet u-sheet-1">
@@ -947,7 +827,7 @@ c6.177,6.18,9.262,14.271,9.262,22.366C354.708,234.018,351.617,242.115,345.441,24
         © 2024 Uniqkorn Creative GmbH</p>
     </div>
   </footer>
-  <section
+   <section
     class="u-align-center u-black u-clearfix u-container-style u-dialog-block u-opacity u-opacity-70 u-valign-middle-lg u-valign-middle-md u-valign-middle-sm u-valign-middle-xl u-valign-middle-xxl u-dialog-section-11"
     id="sec-417b">
     <div class="u-container-style u-dialog u-radius u-shape-round u-white u-dialog-1">
@@ -955,16 +835,22 @@ c6.177,6.18,9.262,14.271,9.262,22.366C354.708,234.018,351.617,242.115,345.441,24
         <div class="custom-expanded data-layout-selected u-align-center u-clearfix u-layout-wrap u-layout-wrap-1">
           <div class="u-layout">
             <div class="u-layout-row">
-              <div class="u-container-align-center u-container-style u-image u-layout-cell u-size-30 u-image-1"
-                data-image-width="177" data-image-height="250">
-                <div class="u-container-layout u-container-layout-2"></div>
+              <div class="u-container-style u-layout-cell u-size-30 u-white u-layout-cell-1">
+                <div class="u-container-layout u-container-layout-2">
+                  <img id="dialogImage" class="u-image u-image-default u-preserve-proportions u-image-1" src="Layout/images/1063.webp"
+                    alt="" data-image-width="177" data-image-height="250" style="width: -webkit-fill-available;" />
+                </div>
               </div>
               <div class="u-container-style u-layout-cell u-size-30 u-layout-cell-2">
                 <div class="u-container-layout u-container-layout-3">
-                  <p class="u-align-right u-text u-text-default u-text-1">نموذج سيرة ذاتية مكون من عمودين</p>
+                  <p id="templateContent" class="u-align-right u-text u-text-default u-text-1" >
+                    نموذج سيرة ذاتية مكون من عمودين
+                  </p>
                   <div class="u-border-1 u-border-grey-dark-1 u-line u-line-horizontal u-line-1"></div>
-                  <p class="u-align-right u-text u-text-default u-text-palette-5-dark-1 u-text-2">لقد تم تصميم كل قالب
-                    بعناية لجعل تصميم سيرتك الذاتية أمرًا في غاية السهولة بالنسبة لك.</p>
+                  <p class="u-align-right u-text u-text-default u-text-palette-5-dark-1 u-text-2">
+                    لقد تم تصميم كل قالب بعناية لجعل تصميم سيرتك الذاتية أمرًا
+                    في غاية السهولة بالنسبة لك.
+                  </p>
                   <ul class="u-align-right u-custom-list u-text u-text-3">
                     <li>
                       <div class="u-list-icon u-list-icon-1">
@@ -973,7 +859,8 @@ c6.177,6.18,9.262,14.271,9.262,22.366C354.708,234.018,351.617,242.115,345.441,24
                             d="m433.1 67.1-231.8 231.9c-6.2 6.2-16.4 6.2-22.6 0l-99.8-99.8-78.9 78.8 150.5 150.5c10.5 10.5 24.6 16.3 39.4 16.3 14.8 0 29-5.9 39.4-16.3l282.7-282.5z"
                             fill="currentColor"></path>
                         </svg>
-                      </div>مقاس A4/US-Letter
+                      </div>
+                      مقاس A4/US-Letter
                     </li>
                     <li>
                       <div class="u-list-icon u-list-icon-2">
@@ -982,7 +869,8 @@ c6.177,6.18,9.262,14.271,9.262,22.366C354.708,234.018,351.617,242.115,345.441,24
                             d="m433.1 67.1-231.8 231.9c-6.2 6.2-16.4 6.2-22.6 0l-99.8-99.8-78.9 78.8 150.5 150.5c10.5 10.5 24.6 16.3 39.4 16.3 14.8 0 29-5.9 39.4-16.3l282.7-282.5z"
                             fill="currentColor"></path>
                         </svg>
-                      </div>نص قابل للتحرير
+                      </div>
+                      نص قابل للتحرير
                     </li>
                     <li>
                       <div class="u-list-icon u-list-icon-3">
@@ -991,7 +879,8 @@ c6.177,6.18,9.262,14.271,9.262,22.366C354.708,234.018,351.617,242.115,345.441,24
                             d="m433.1 67.1-231.8 231.9c-6.2 6.2-16.4 6.2-22.6 0l-99.8-99.8-78.9 78.8 150.5 150.5c10.5 10.5 24.6 16.3 39.4 16.3 14.8 0 29-5.9 39.4-16.3l282.7-282.5z"
                             fill="currentColor"></path>
                         </svg>
-                      </div>قابلة للتخصيص بالكامل
+                      </div>
+                      قابلة للتخصيص بالكامل
                     </li>
                     <li>
                       <div class="u-list-icon u-list-icon-4">
@@ -1000,7 +889,8 @@ c6.177,6.18,9.262,14.271,9.262,22.366C354.708,234.018,351.617,242.115,345.441,24
                             d="m433.1 67.1-231.8 231.9c-6.2 6.2-16.4 6.2-22.6 0l-99.8-99.8-78.9 78.8 150.5 150.5c10.5 10.5 24.6 16.3 39.4 16.3 14.8 0 29-5.9 39.4-16.3l282.7-282.5z"
                             fill="currentColor"></path>
                         </svg>
-                      </div>طباعة تنسيق جاهز
+                      </div>
+                      طباعة تنسيق جاهز
                     </li>
                     <li>
                       <div class="u-list-icon u-list-icon-5">
@@ -1009,19 +899,23 @@ c6.177,6.18,9.262,14.271,9.262,22.366C354.708,234.018,351.617,242.115,345.441,24
                             d="m433.1 67.1-231.8 231.9c-6.2 6.2-16.4 6.2-22.6 0l-99.8-99.8-78.9 78.8 150.5 150.5c10.5 10.5 24.6 16.3 39.4 16.3 14.8 0 29-5.9 39.4-16.3l282.7-282.5z"
                             fill="currentColor"></path>
                         </svg>
-                      </div>السيرة الذاتية عبر الإنترنت مع رابط قابل للمشاركة
+                      </div>
+                      السيرة الذاتية عبر الإنترنت مع رابط قابل للمشاركة
                     </li>
                   </ul>
                   <a href="#"
                     class="u-align-right u-btn u-btn-round u-button-style u-hover-palette-1-light-1 u-palette-1-base u-radius u-btn-1">استخدم
-                    التصمبم </a>
+                    التصمبم
+                  </a>
                 </div>
               </div>
             </div>
           </div>
         </div>
-      </div><button class="u-dialog-close-button u-file-icon u-icon u-palette-1-base u-text-white u-icon-1"><img
-          src="layout/images/32178-e26c81cc.png" alt=""></button>
+      </div>
+      <button class="u-dialog-close-button u-file-icon u-icon u-palette-1-base u-text-white u-icon-1">
+        <img src="Layout/images/32178-e26c81cc.png" alt="" />
+      </button>
     </div>
   </section>
   <style>
@@ -1523,7 +1417,7 @@ c6.177,6.18,9.262,14.271,9.262,22.366C354.708,234.018,351.617,242.115,345.441,24
       }
     }
   </style>
-  <script  src="Layout/Arabic/js/updateLastActive.js" defer=""></script>
+  <script  src="Layout/Arabic/js/dashboard.js" defer=""></script>
 </body>
 
 </html>

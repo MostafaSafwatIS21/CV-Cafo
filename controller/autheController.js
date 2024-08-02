@@ -2,7 +2,7 @@ const AppError = require("../utils/AppError");
 const catchAsync = require("../utils/catchAsync");
 const jwt = require("jsonwebtoken");
 const User = require("../models/userModel");
-const { sendEmail, } = require("../utils/sendEmail");
+const { sendEmail } = require("../utils/sendEmail");
 const ejs = require("ejs");
 const path = require("path");
 const { sendToken } = require("../utils/jwt");
@@ -12,7 +12,6 @@ const passport = require("passport");
 /**
  * @abstract protect routes
  */
-
 
 exports.protect = catchAsync(async (req, res, next) => {
   const { accessToken, refreshToken } = req.cookies;
@@ -46,6 +45,7 @@ exports.protect = catchAsync(async (req, res, next) => {
   req.user = user;
   next();
 });
+
 exports.isLoggedIn = catchAsync(async (req, res, next) => {
   if (req.cookies.refreshToken) {
     const decodedToken = jwt.verify(
@@ -104,11 +104,14 @@ exports.isBlocked = catchAsync(async (req, res, next) => {
 
   if (user.isBlocked) {
     return next(
-      new AppError("You do not have permission to perform any action please contact with admin.", 403)
+      new AppError(
+        "You do not have permission to perform any action please contact with admin.",
+        403
+      )
     );
   }
   next();
-})
+});
 // this for activate email
 const activationToken = (user) => {
   const activationCode = Math.floor(1000 + Math.random() * 90).toString();
@@ -226,6 +229,9 @@ exports.logout = catchAsync(async (req, res, next) => {
   const userId = req.user.id;
   const accessToken = req.cookies.accessToken;
   const decodedToken = jwt.verify(accessToken, process.env.SECRET_KEY_JWT);
+
+  console.log("Token", decodedToken);
+
   if (decodedToken.id !== userId) {
     next(new AppError("you are not allowed to do this action", 401));
   }
@@ -253,10 +259,11 @@ exports.logout = catchAsync(async (req, res, next) => {
 exports.updatePassword = catchAsync(async (req, res, next) => {
   const userId = req.user.id;
   const user = await User.findById(userId).select("+password");
+
   const { currentPassword, password, confirmPassword } = req.body;
 
   if (!currentPassword || !password || !confirmPassword) {
-    next(new AppError("please provide all fields", 400));
+    return next(new AppError("please provide all fields", 400));
   }
 
   const checkPassword = await user.correctPassword(
@@ -264,7 +271,7 @@ exports.updatePassword = catchAsync(async (req, res, next) => {
     user.password
   );
   if (!checkPassword) {
-    next(new AppError("password not correct", 400));
+    return next(new AppError("password not correct", 400));
   }
 
   user.password = password;
@@ -288,50 +295,49 @@ exports.forgetPassword = catchAsync(async (req, res, next) => {
     return next(new AppError("Please provide your email!", 400));
   }
   const user = await User.findOne({ email });
-  if (!user) {
-    return next(new AppError("There is no user with email address.", 404));
+  if (user) {
+    let resetToken;
+
+    try {
+      resetToken = user.createPasswordResetToken();
+      await user.save({ validateBeforeSave: false });
+    } catch (error) {
+      return next(new AppError(error, 500));
+    }
+
+    const resetURL = `${req.protocol}://${req.get(
+      "host"
+    )}/reset-password/${resetToken}`;
+
+    const message = `Forgot your password? Submit a PATCH request with your new password and confirm password to: ${resetURL}.\nIf you didn't forget your password, please ignore this email!`;
+    const data = { user: { name: user.name }, message };
+
+    try {
+      const html = await ejs.renderFile(
+        path.join(__dirname, "../mails/resetPassword.ejs"),
+        data
+      );
+
+      await sendEmail({
+        email: user.email,
+        subject: "Reset Your Password",
+        tamplate: "resetPassword.ejs",
+        data,
+      });
+
+      console.log("reset token ", user.passwordResetToken);
+    } catch (error) {
+      user.passwordResetToken = undefined;
+      user.passwordResetExpires = undefined;
+      await user.save({ validateBeforeSave: false });
+
+      return next(new AppError("something went worng", 500));
+    }
   }
-  let resetToken;
-
-  try {
-    resetToken = user.createPasswordResetToken();
-    await user.save({ validateBeforeSave: false });
-  } catch (error) {
-    return next(new AppError(error, 500));
-  }
-
-  const resetURL = `${req.protocol}://${req.get(
-    "host"
-  )}/reset-password/${resetToken}`;
-
-  const message = `Forgot your password? Submit a PATCH request with your new password and confirm password to: ${resetURL}.\nIf you didn't forget your password, please ignore this email!`;
-  const data = { user: { name: user.name }, message };
-
-  try {
-    const html = await ejs.renderFile(
-      path.join(__dirname, "../mails/resetPassword.ejs"),
-      data
-    );
-
-    await sendEmail({
-      email: user.email,
-      subject: "Reset Your Password",
-      tamplate: "resetPassword.ejs",
-      data,
-    });
-
-    console.log("reset token ", user.passwordResetToken);
-    res.status(200).json({
-      status: "success",
-      message: "Token sent to email check your box!",
-    });
-  } catch (error) {
-    user.passwordResetToken = undefined;
-    user.passwordResetExpires = undefined;
-    await user.save({ validateBeforeSave: false });
-
-    return next(new AppError("something went worng", 500));
-  }
+  res.status(200).json({
+    status: "success",
+    message: "Token sent to email check your box!",
+  });
 });
 /**
  *@abstract reset password
@@ -388,18 +394,24 @@ exports.resetPassword = catchAsync(async (req, res, next) => {
  */
 
 exports.deleteMe = catchAsync(async (req, res, next) => {
-  if (req.user.id !== req.params.Id) {
+  const userId = req.user.id;
+  const accessToken = req.cookies.accessToken;
+  const decodedToken = jwt.verify(accessToken, process.env.SECRET_KEY_JWT);
+
+  // console.log("Token", decodedToken);
+
+  if (decodedToken.id !== userId) {
     return next(new AppError("you are not allowed to do this action", 401));
   }
-  const user = await User.findByIdAndDelete(req.params.Id);
-  if (!user) {
-    return next(new AppError("this user not found", 401));
-  }
-  await User.findByIdAndUpdate(req.user.id, { active: false });
+  await User.findByIdAndDelete(userId);
 
-  res.status(204).json({
+  res.cookie("accessToken", "", { maxAge: 1 });
+
+  res.cookie("refreshToken", "", { maxAge: 1 });
+
+  res.status(200).json({
     status: "success",
-    data: null,
+    message: "Deleted Successfully",
   });
 });
 /**
@@ -447,6 +459,20 @@ exports.googleAuthCallback = (req, res, next) => {
 /**
  * @abstract set password for user that signup with google
  */
+
+exports.isNewUser = catchAsync(async (req, res, next) => {
+  const userId = req.user._id;
+  const user = await User.findById(userId);
+
+  if (!user) {
+    return next(new AppError("user not found", 400));
+  }
+
+  if (!user.newer) {
+    return next(new AppError("Password Has been set before", 401));
+  }
+  next();
+});
 
 exports.setPassword = catchAsync(async (req, res, next) => {
   const userid = req.user._id;

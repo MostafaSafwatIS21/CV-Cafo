@@ -4,6 +4,7 @@ const { bool } = require("sharp");
 const coverLetterSchema = mongoose.Schema({
   userId: { type: mongoose.Schema.Types.ObjectId, ref: "User" },
   templateId: { type: mongoose.Schema.Types.ObjectId, ref: "Template" },
+  coverImage: String,
   letterDate: {
     trype: Date,
     default: Date.now,
