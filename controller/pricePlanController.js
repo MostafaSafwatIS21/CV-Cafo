@@ -2,6 +2,9 @@ const pricePlan = require("../models/pricePlanModel");
 const catchAsync = require("../utils/catchAsync");
 const AppError = require("../utils/AppError");
 
+/**
+ * @TODO
+ */
 exports.createPlan = catchAsync(async (req, res, next) => {
   const newPlan = await pricePlan.create(req.body);
   res.status(201).json({

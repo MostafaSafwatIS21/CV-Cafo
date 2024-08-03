@@ -60,6 +60,7 @@ app.use("/api/coupon", couponRouter);
 app.use("/api/price-plan", pricePlanRouter);
 
 app.all("*", (req, res, next) => {
+  res.redirect("/dashboard");
   next(new AppError(`can't find this route ${req.originalUrl} `, 400));
 });
 app.use(globalErrorHandler);

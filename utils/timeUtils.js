@@ -1,5 +1,5 @@
-const moment = require('moment');
-require('moment-timezone');
+const moment = require("moment");
+require("moment-timezone");
 
 function formatLastActive(lastActive) {
   const now = moment();
@@ -14,8 +14,10 @@ function formatLastActive(lastActive) {
   const minutes = duration.minutes();
   const seconds = duration.seconds();
 
-  if (minutes === 0 && seconds < 60) {
-    return 'Online';
+  if (hours >= 3) {
+    return "Offline";
+  } else if (minutes === 0 && seconds < 60) {
+    return "Online";
   } else if (days > 0) {
     return `${days}d ${hours}h ${minutes}m`;
   } else if (hours > 0) {

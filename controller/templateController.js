@@ -27,8 +27,18 @@ exports.uploadCover = upload.single("cover");
 exports.resizeImage = async (req, res, next) => {
   if (!req.file) return next();
 
+  let name = "template-cover";
+  if (req.body.type) {
+    name = req.body.type;
+
+    let words = name.split(" ");
+    if (words.length === 2) {
+      name = `${words[0]}-${words[1]}`;
+    }
+  }
+
   try {
-    req.file.filename = `template-cover-${Date.now()}.jpeg`;
+    req.file.filename = `${name}-${Date.now()}.jpeg`;
     await sharp(req.file.buffer)
       .resize(960, 1358)
       .toFormat("jpeg")
@@ -47,17 +57,17 @@ exports.createTemplate = async (req, res, next) => {
       return next(new AppError("Please upload a cover image", 400));
     }
 
-    const { type, price, name,classified } = req.body;
+    const { type, price, name, classified, htmlFile } = req.body;
     const cover = req.file.filename;
-    const userId = req.user._id;
 
     const newTemplate = await Template.create({
       type,
       cover,
-      userId,
+
       price: `$${price}`,
       name,
-      classified
+      classified,
+      htmlFile,
     });
 
     res.status(201).json({

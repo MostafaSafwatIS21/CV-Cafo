@@ -1,4 +1,3 @@
-const Subscription = require("../models/subscriptionModel");
 const User = require("../models/userModel");
 const catchAsync = require("../utils/catchAsync");
 const AppError = require("../utils/AppError");
@@ -9,67 +8,67 @@ const { formatLastActive } = require("../utils/timeUtils");
  * @desc Update subscription for user
  * @private only admin can change user subscription status
  */
-exports.changeUserSubscribtion = catchAsync(async (req, res, next) => {
-  const { id } = req.params;
-  const { duration } = req.body;
+// exports.changeUserSubscribtion = catchAsync(async (req, res, next) => {
+//   const { id } = req.params;
+//   const { duration } = req.body;
 
-  const isValid = duration === "1-month" || duration === "1-year";
-  if (!isValid || !duration) {
-    return next(new AppError("provide valid duration", 400));
-  }
-  const user = await User.findById(id);
-  if (!user) {
-    return next(new AppError("User not found with this ID!", 400));
-  }
-  const subscription = await Subscription.findOne({ userId: id }).populate(
-    "userId"
-  );
+//   const isValid = duration === "1-month" || duration === "1-year";
+//   if (!isValid || !duration) {
+//     return next(new AppError("provide valid duration", 400));
+//   }
+//   const user = await User.findById(id);
+//   if (!user) {
+//     return next(new AppError("User not found with this ID!", 400));
+//   }
+//   const subscription = await Subscription.findOne({ userId: id }).populate(
+//     "userId"
+//   );
 
-  if (!subscription) {
-    return next(
-      new AppError(
-        `this user  does not have an active subscription. As an admin, you have the permission to set up subscriptions.`,
-        400
-      )
-    );
-  }
-  subscription.duration = duration;
-  await subscription.save();
-  res.status(201).json({
-    status: "success",
-    message: `User set subscriptions successfully`,
-    subscription,
-  });
-});
+//   if (!subscription) {
+//     return next(
+//       new AppError(
+//         `this user  does not have an active subscription. As an admin, you have the permission to set up subscriptions.`,
+//         400
+//       )
+//     );
+//   }
+//   subscription.duration = duration;
+//   await subscription.save();
+//   res.status(201).json({
+//     status: "success",
+//     message: `User set subscriptions successfully`,
+//     subscription,
+//   });
+// });
 /**
  * @sescribe set subscribtion
  *
  * @private only admin
  * @type {(function(*, *, *): void)|*}
  */
-exports.setSubscribtion = catchAsync(async (req, res, next) => {
-  const { id } = req.params;
-  const { duration } = req.body;
+// exports.setSubscribtion = catchAsync(async (req, res, next) => {
+//   const { id } = req.params;
+//   const { duration } = req.body;
 
-  const isValid = duration === "1-month" || duration === "1-year";
-  if (!isValid || !duration) {
-    return next(new AppError("provide vaild duration", 400));
-  }
-  const user = await User.findById(id);
-  if (!user) {
-    return next(new AppError("User not found with this ID!", 400));
-  }
-  const subscription = await Subscription.create({
-    userId: id,
-    duration,
-  });
+//   const isValid = duration === "1-month" || duration === "1-year";
+//   if (!isValid || !duration) {
+//     return next(new AppError("provide vaild duration", 400));
+//   }
+//   const user = await User.findById(id);
+//   if (!user) {
+//     return next(new AppError("User not found with this ID!", 400));
+//   }
+//   const subscription = await Subscription.create({
+//     userId: id,
+//     duration,
+//   });
 
-  res.status(201).json({
-    status: "success",
-    message: `User set subscriptions successfully`,
-    subscription,
-  });
-});
+//   res.status(201).json({
+//     status: "success",
+//     message: `User set subscriptions successfully`,
+//     subscription,
+//   });
+// });
 
 exports.setAdmin = catchAsync(async (req, res, next) => {
   const { id } = req.params;
